@@ -1,0 +1,306 @@
+/* 1. SIDEBAR BASE - Estructura y posicionamiento general */
+#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  box-shadow: 6px 0 20px rgba(0, 0, 0, 0.08);
+  padding: 3rem 1.5rem 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--bg-primary);
+}
+
+/* 2. SIDEBAR COLAPSADO - Reduce ancho y oculta contenido */
+#sidebar.collapsed {
+  width: 60px;
+  padding: 3rem 0.5rem 2rem;
+}
+
+#sidebar-content {
+  transition: opacity 0.1s ease;
+  /* transform 0.1s ease; */
+}
+
+#sidebar.collapsed #sidebar-content {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+/* 3. BOTÓN COLAPSAR - Controla expansión/colapso */
+.collapse-btn {
+  position: absolute;
+  top: 1rem;
+  right: 0.7rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--text-primary);
+  border-radius: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  /* box-shadow: 4px 0 12px rgba(0,0,0,0.15); */
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.collapse-btn:hover,
+.collapse-btn:focus {
+  background: black;
+  color: var(--bg-primary);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  transform: scale(1.05);
+  /* box-shadow: 6px 0 16px rgba(0,0,0,0.2); */
+  outline: none;
+}
+
+.collapse-btn:focus-visible {
+  transition: all 0.1s ease;
+  outline: 2px solid var(--accent);
+}
+
+/* 4. TIPOGRAFÍA Y LISTAS SIDEBAR */
+#sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #000000;
+  opacity: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sidebar h3 {
+  margin-bottom: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sidebar ul {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+/* Por defecto: sin borde visible */
+#sidebar li {
+  border: 2px solid transparent;
+  margin-bottom: 0.1rem;
+  border-radius: 12px;
+}
+
+/* Hover → borde negro */
+#sidebar li:hover,
+#sidebar li:focus-within {
+  background: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+/* 5. ENLACES SIDEBAR */
+#sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1.125rem;
+  color: black;
+  text-decoration: none;
+  /* border-radius: 12px; */
+  /* transition: all 0.25s ease; */
+  gap: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+#sidebar a:focus-visible {
+  border-radius: 12px;
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent);
+  border-color: transparent;
+}
+
+/* Chat activo en la barra lateral */
+#sidebar li.active {
+  background: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+#sidebar li.active a {
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* 6. MAIN CONTENT - Ajusta según estado sidebar */
+main {
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: 0;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.sidebar-collapsed main {
+  margin-left: 60px;
+}
+
+/* 7. PROFILE ZONE - Zona de perfil al final del sidebar */
+.profile-zone {
+  position: absolute;
+  bottom: 2rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-email {
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0;
+  color: rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-menu-btn {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.profile-menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.profile-menu-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.profile-menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 1.5rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--bg-primary);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.profile-menu[hidden] {
+  display: none;
+}
+
+.profile-menu-item {
+  display: flex;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+  /* align-items: center; */
+  gap: 0.5rem;
+}
+
+.profile-menu-item:hover {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--text-primary);
+}
+
+.profile-menu-item:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* Cuando el sidebar está colapsado */
+#sidebar.collapsed .profile-zone {
+  left: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  border: none;
+  background-color: transparent;
+}
+
+#sidebar.collapsed .profile-info {
+  opacity: 0;
+  display: none;
+}
+
+#sidebar.collapsed .profile-menu-btn {
+  display: none;
+}
+
+#sidebar.collapsed .profile-zone:hover {
+  background-color: transparent;
+}

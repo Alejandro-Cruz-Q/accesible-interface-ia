@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot LLM</title>
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="responsive.css" />
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="input.css" />
+  </head>
+  <body>
+    <nav id="sidebar" aria-label="Navegación chats" role="navigation">
+      <button
+        id="collapse-btn"
+        class="collapse-btn"
+        aria-expanded="true"
+        aria-controls="sidebar-content"
+      >
+        <span>←</span>
+      </button>
+      <div id="sidebar-content">
+        <h2>Funcionalidades</h2>
+        <ul role="list">
+          <li><a href="#work">Nueva conversación</a></li>
+          <li><a href="#uni">Imágenes</a></li>
+          <li><a href="#life">Espacios</a></li>
+        </ul>
+        <h3>Chats Recientes</h3>
+        <ul role="list">
+          <li>
+            <a
+              href="#"
+              class="chat-link"
+              data-chat-id="1"
+              data-chat-title="Capital de Francia"
+              >Capital de Francia</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="chat-link"
+              data-chat-id="2"
+              data-chat-title="Programación"
+              >Programación</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="chat-link"
+              data-chat-id="3"
+              data-chat-title="Inteligencia Artificial"
+              >Inteligencia Artificial</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div id="profile-zone" class="profile-zone">
+        <div class="profile-avatar">
+          <img id="profile-img" src="profilePic.jpg" alt="Avatar del usuario" />
+        </div>
+        <div class="profile-info">
+          <p class="profile-name">Usuario</p>
+          <p class="profile-email">usuario@email.com</p>
+        </div>
+        <button
+          id="profile-menu-btn"
+          class="profile-menu-btn"
+          aria-label="Menú de perfil"
+          aria-expanded="false"
+          aria-haspopup="menu"
+        >
+          ⋮
+        </button>
+        <div id="profile-menu" class="profile-menu" role="menu" hidden>
+          <button class="profile-menu-item" role="menuitem">
+            👤 Ver perfil
+          </button>
+          <button class="profile-menu-item" role="menuitem">
+            ⚙️ Configuración
+          </button>
+          <button class="profile-menu-item" role="menuitem">
+            🚪 Cerrar sesión
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <header id="main-header" role="banner">
+        <div class="header-left">
+          <button class="header-btn" aria-label="Nuevo chat">Nuevo chat</button>
+        </div>
+        <div class="header-center">
+          <h2>Titulo del chat</h2>
+        </div>
+        <div class="header-right">
+          <div class="tools-menu-wrapper">
+            <button
+              id="header-options-btn"
+              class="header-btn menu-btn"
+              aria-label="Más opciones"
+              aria-expanded="false"
+              aria-haspopup="menu"
+            >
+              ⋮
+            </button>
+            <div id="header-options-menu" class="tools-menu" role="menu" hidden>
+              <button class="tools-menu-item" role="menuitem">✏️ Editar</button>
+              <button class="tools-menu-item" role="menuitem">📋 Copiar</button>
+              <button class="tools-menu-item" role="menuitem">
+                🗑️ Eliminar
+              </button>
+              <button class="tools-menu-item" role="menuitem">⚙️ Más</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section
+        id="chat-area"
+        aria-label="Área de conversación"
+        aria-live="polite"
+      >
+        <div class="welcome-message">
+          <h2>Bienvenido a tu asistente IA</h2>
+          <p>
+            Pregúntame cualquier cosa sobre trabajo, estudios o vida diaria.
+          </p>
+        </div>
+      </section>
+      <div id="input-area">
+        <div class="input-container">
+          <div class="input-left">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Escribe tu mensaje..."
+              aria-label="Entrada de mensaje"
+            />
+            <div class="tools-container">
+              <div class="tools-menu-wrapper">
+                <button
+                  id="tools-btn"
+                  class="menu-btn"
+                  aria-label="Herramientas"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  Herramientas
+                </button>
+                <div id="tools-menu" class="tools-menu" role="menu" hidden>
+                  <button class="tools-menu-item" role="menuitem">
+                    📎 Archivo
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    🔗 Enlace
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    🖼️ Imagen
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    ⚙️ Configuración
+                  </button>
+                </div>
+              </div>
+              <div class="tools-menu-wrapper">
+                <button
+                  id="options-btn"
+                  class="menu-btn"
+                  aria-label="Opciones"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                >
+                  Opciones
+                </button>
+                <div id="options-menu" class="tools-menu" role="menu" hidden>
+                  <button class="tools-menu-item" role="menuitem">
+                    💾 Guardar
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    📋 Copiar
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    🗑️ Limpiar
+                  </button>
+                  <button class="tools-menu-item" role="menuitem">
+                    ⚙️ Preferencias
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="send-container">
+            <button id="send-btn" aria-label="Enviar">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
