@@ -1,0 +1,22 @@
+{
+  "name": "accesible-interface-ia",
+  "version": "1.0.0",
+  "description": "Trabajo de Fin de Grado de Ingeniería Informática. Implementación de una interfaz de LLM centrada en accesibilidad visual tras análisis de LLMs conocidos aplicando buenas prácticas identificadas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "type ": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.0.7"
+  },
+  "dependencies": {
+    "@google/genai": "^1.48.0"
+  }
+}

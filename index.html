@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chatbot LLM</title>
-    <link rel="stylesheet" href="base.css" />
-    <link rel="stylesheet" href="header.css" />
-    <link rel="stylesheet" href="responsive.css" />
-    <link rel="stylesheet" href="sidebar.css" />
-    <link rel="stylesheet" href="input.css" />
+    <link rel="stylesheet" href="/src/base.css" />
+    <link rel="stylesheet" href="/src/header.css" />
+    <link rel="stylesheet" href="/src/responsive.css" />
+    <link rel="stylesheet" href="/src/sidebar.css" />
+    <link rel="stylesheet" href="/src/input.css" />
   </head>
   <body>
     <nav id="sidebar" aria-label="Navegación chats" role="navigation">
@@ -23,12 +23,12 @@
       <div id="sidebar-content">
         <h2>Funcionalidades</h2>
         <ul role="list">
-          <li><a href="#work">Nueva conversación</a></li>
+          <li><a href="#" id="new-chat-btn">Nueva conversación</a></li>
           <li><a href="#uni">Imágenes</a></li>
           <li><a href="#life">Espacios</a></li>
         </ul>
         <h3>Chats Recientes</h3>
-        <ul role="list">
+        <ul id="recent-chats" role="list">
           <li>
             <a
               href="#"
@@ -92,7 +92,7 @@
     <main>
       <header id="main-header" role="banner">
         <div class="header-left">
-          <button class="header-btn" aria-label="Nuevo chat">Nuevo chat</button>
+          <button id="new-chat-btn" class="header-btn" aria-label="Nuevo chat">Nuevo chat</button>
         </div>
         <div class="header-center">
           <h2>Titulo del chat</h2>
@@ -199,6 +199,6 @@
         </div>
       </div>
     </main>
-    <script src="script.js"></script>
+    <script type="module" src="/src/script.js"></script>
   </body>
 </html>

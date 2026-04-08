@@ -56,6 +56,32 @@ const chatsDatabase = {
   },
 };
 
+const GROQ_API_KEY = "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";
+
+async function askGemini(chatId) {
+  const messages = chatsDatabase[chatId].messages.map((msg) => ({
+    role: msg.type === "user" ? "user" : "assistant",
+    content: msg.text,
+  }));
+
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${GROQ_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages,
+    }),
+  });
+
+  if (!response.ok) throw new Error(`Error API: ${response.status}`);
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
+
 function setActiveChat(chatId) {
   document.querySelectorAll("#sidebar li").forEach((li) => {
     li.classList.remove("active");
@@ -71,7 +97,6 @@ function setActiveChat(chatId) {
 
 let currentChatId = null;
 
-// Función para renderizar los mensajes de un chat
 function renderChat(chatId) {
   const chat = chatsDatabase[chatId];
   if (!chat) return;
@@ -86,6 +111,15 @@ function renderChat(chatId) {
   const chatArea = document.getElementById("chat-area");
   chatArea.innerHTML = "";
 
+  // Chat vacío → mostrar mensaje de bienvenida
+  if (chat.messages.length === 0) {
+    const welcome = document.createElement("div");
+    welcome.className = "welcome-message";
+    welcome.textContent = "Escribe un mensaje para comenzar...";
+    chatArea.appendChild(welcome);
+    return;
+  }
+
   // Renderizar mensajes del chat
   chat.messages.forEach((msg) => {
     const msgDiv = document.createElement("div");
@@ -96,6 +130,43 @@ function renderChat(chatId) {
 
   // Scroll hacia el final
   chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+// Contador para IDs únicos de nuevos chats
+let nextChatId = Object.keys(chatsDatabase).length + 1;
+
+function createNewChat() {
+  const id = nextChatId++;
+  const title = `Nueva conversación ${id}`;
+
+  // Añadir a la base de datos simulada
+  chatsDatabase[id] = {
+    id,
+    title,
+    messages: [],
+  };
+
+  // Crear el <li> y el <a> en el sidebar
+  const ul = document.querySelector("#recent-chats");
+
+  const li = document.createElement("li");
+
+  const a = document.createElement("a");
+  a.href = "#";
+  a.className = "chat-link";
+  a.dataset.chatId = id;
+  a.textContent = title;
+
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    renderChat(id);
+  });
+
+  li.appendChild(a);
+  ul.prepend(li); // el nuevo chat aparece el primero de la lista
+
+  // Mostrar el chat vacío en la zona principal
+  renderChat(id);
 }
 
 // Event listeners para los links de chat en la barra lateral
@@ -215,38 +286,78 @@ MENU_CONFIG.forEach(({ btnId, menuId }) => setupDropdownMenu(btnId, menuId));
 // Cerrar todos al hacer click fuera de cualquier menú
 document.addEventListener("click", () => closeAllMenus());
 
-document.getElementById("send-btn").addEventListener("click", () => {
+document.getElementById("send-btn").addEventListener("click", async () => {
   const input = document.getElementById("chat-input");
-  if (input.value.trim()) {
-    // Eliminar mensaje de bienvenida si existe
-    const welcomeMessage = document.querySelector(".welcome-message");
-    if (welcomeMessage) {
-      welcomeMessage.remove();
+  if (!input.value.trim()) return;
+
+  // Si no hay chat abierto, crear uno nuevo
+  if (!currentChatId) createNewChat();
+
+  // Eliminar mensaje de bienvenida si existe
+  const welcomeMessage = document.querySelector(".welcome-message");
+  if (welcomeMessage) welcomeMessage.remove();
+
+  const userText = input.value.trim();
+
+  // Guardar y mostrar mensaje del usuario
+  chatsDatabase[currentChatId].messages.push({ type: "user", text: userText });
+
+  const chatArea = document.getElementById("chat-area");
+  const userMsg = document.createElement("div");
+  userMsg.className = "user-msg";
+  userMsg.textContent = userText;
+  chatArea.appendChild(userMsg);
+
+  input.value = "";
+  chatArea.scrollTop = chatArea.scrollHeight;
+
+  // Indicador de escritura
+  const typing = document.createElement("div");
+  typing.className = "bot-msg typing-indicator";
+  typing.textContent = "...";
+  chatArea.appendChild(typing);
+  chatArea.scrollTop = chatArea.scrollHeight;
+
+  try {
+    const botText = await askGemini(currentChatId);
+
+    // Eliminar indicador y mostrar respuesta real
+    typing.remove();
+
+    chatsDatabase[currentChatId].messages.push({ type: "bot", text: botText });
+
+    const botMsg = document.createElement("div");
+    botMsg.className = "bot-msg";
+    botMsg.textContent = botText;
+    chatArea.appendChild(botMsg);
+  } catch (error) {
+    typing.remove();
+
+    const errMsg = document.createElement("div");
+    errMsg.className = "bot-msg";
+
+    if (error.message.includes("429")) {
+      errMsg.textContent =
+        "Demasiadas peticiones. Espera unos segundos e inténtalo de nuevo.";
+    } else if (error.message.includes("401") || error.message.includes("403")) {
+      errMsg.textContent = "API key inválida o sin permisos.";
+    } else {
+      errMsg.textContent = `Error al conectar con la IA: ${error.message}`;
     }
 
-    // Si no hay chat abierto, abrir el primero
-    if (!currentChatId) {
-      renderChat(1);
-    }
-
-    // Agregar mensaje del usuario al chat simulado
-    const chatArea = document.getElementById("chat-area");
-    const userMsg = document.createElement("div");
-    userMsg.className = "user-msg";
-    userMsg.textContent = input.value;
-    chatArea.appendChild(userMsg);
-
-    // Agregar mensaje simulado del bot (con pequeño delay)
-    setTimeout(() => {
-      const botMsg = document.createElement("div");
-      botMsg.className = "bot-msg";
-      botMsg.textContent =
-        "Este es un mensaje simulado de la IA. En producción, aquí vendría la respuesta real.";
-      chatArea.appendChild(botMsg);
-      chatArea.scrollTop = chatArea.scrollHeight;
-    }, 500);
-
-    input.value = "";
+    chatArea.appendChild(errMsg);
     chatArea.scrollTop = chatArea.scrollHeight;
+    console.error(error);
   }
+
+  chatArea.scrollTop = chatArea.scrollHeight;
 });
+
+document
+  .querySelectorAll("#new-chat-btn, #new-conversation-btn")
+  .forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      createNewChat();
+    });
+  });
