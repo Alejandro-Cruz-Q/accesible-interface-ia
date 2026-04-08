@@ -64,17 +64,20 @@ async function askGemini(chatId) {
     content: msg.text,
   }));
 
-  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${GROQ_API_KEY}`,
+  const response = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-8b-instant",
+        messages,
+      }),
     },
-    body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
-      messages,
-    }),
-  });
+  );
 
   if (!response.ok) throw new Error(`Error API: ${response.status}`);
 
@@ -96,6 +99,68 @@ function setActiveChat(chatId) {
 }
 
 let currentChatId = null;
+
+function createMessageEl(type, text) {
+  const wrapper = document.createElement("div");
+  wrapper.className =
+    type === "user"
+      ? "msg-wrapper msg-wrapper--user"
+      : "msg-wrapper msg-wrapper--bot";
+
+  const bubble = document.createElement("div");
+  bubble.className = type === "user" ? "user-msg" : "bot-msg";
+  bubble.textContent = text;
+
+  const actions = document.createElement("div");
+  actions.className = "msg-actions";
+
+  const userButtons = [
+    { icon: "pencil", label: "Editar", action: "edit" },
+    { icon: "copy", label: "Copiar", action: "copy" },
+  ];
+  const botButtons = [
+    { icon: "refresh-cw", label: "Reescribir", action: "rewrite" },
+    { icon: "copy", label: "Copiar", action: "copy" },
+    { icon: "share-2", label: "Compartir", action: "share" },
+    { icon: "thumbs-up", label: "Me gusta", action: "like" },
+    { icon: "thumbs-down", label: "No me gusta", action: "dislike" },
+  ];
+
+  const buttons = type === "user" ? userButtons : botButtons;
+
+  buttons.forEach(({ icon, label, action }) => {
+    const btn = document.createElement("button");
+    btn.className = "msg-action-btn";
+    btn.dataset.action = action;
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+
+    // Icono Lucide
+    const icono = document.createElement("i");
+    icono.setAttribute("data-lucide", icon);
+    btn.appendChild(icono);
+
+    if (action === "copy") {
+      btn.addEventListener("click", () => {
+        navigator.clipboard.writeText(bubble.textContent);
+        // Cambiar temporalmente a icono de confirmación
+        icono.setAttribute("data-lucide", "check");
+        lucide.createIcons({ nodes: [icono] });
+        setTimeout(() => {
+          icono.setAttribute("data-lucide", "copy");
+          lucide.createIcons({ nodes: [icono] });
+        }, 1500);
+      });
+    }
+
+    actions.appendChild(btn);
+  });
+
+  wrapper.appendChild(bubble);
+  wrapper.appendChild(actions);
+
+  return wrapper;
+}
 
 function renderChat(chatId) {
   const chat = chatsDatabase[chatId];
@@ -120,12 +185,12 @@ function renderChat(chatId) {
     return;
   }
 
-  // Renderizar mensajes del chat
   chat.messages.forEach((msg) => {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = msg.type === "user" ? "user-msg" : "bot-msg";
-    msgDiv.textContent = msg.text;
-    chatArea.appendChild(msgDiv);
+    const msgEl = createMessageEl(msg.type, msg.text);
+    chatArea.appendChild(msgEl);
+    lucide.createIcons({
+      nodes: Array.from(msgEl.querySelectorAll("[data-lucide]")),
+    });
   });
 
   // Scroll hacia el final
@@ -303,10 +368,11 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   chatsDatabase[currentChatId].messages.push({ type: "user", text: userText });
 
   const chatArea = document.getElementById("chat-area");
-  const userMsg = document.createElement("div");
-  userMsg.className = "user-msg";
-  userMsg.textContent = userText;
-  chatArea.appendChild(userMsg);
+  const userEl = createMessageEl("user", userText);
+  chatArea.appendChild(userEl);
+  lucide.createIcons({
+    nodes: Array.from(userEl.querySelectorAll("[data-lucide]")),
+  });
 
   input.value = "";
   chatArea.scrollTop = chatArea.scrollHeight;
@@ -326,10 +392,11 @@ document.getElementById("send-btn").addEventListener("click", async () => {
 
     chatsDatabase[currentChatId].messages.push({ type: "bot", text: botText });
 
-    const botMsg = document.createElement("div");
-    botMsg.className = "bot-msg";
-    botMsg.textContent = botText;
-    chatArea.appendChild(botMsg);
+    const botEl = createMessageEl("bot", botText);
+    chatArea.appendChild(botEl);
+    lucide.createIcons({
+      nodes: Array.from(botEl.querySelectorAll("[data-lucide]")),
+    });
   } catch (error) {
     typing.remove();
 

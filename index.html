@@ -92,7 +92,9 @@
     <main>
       <header id="main-header" role="banner">
         <div class="header-left">
-          <button id="new-chat-btn" class="header-btn" aria-label="Nuevo chat">Nuevo chat</button>
+          <button id="new-chat-btn" class="header-btn" aria-label="Nuevo chat">
+            Nuevo chat
+          </button>
         </div>
         <div class="header-center">
           <h2>Titulo del chat</h2>
@@ -153,16 +155,20 @@
                 </button>
                 <div id="tools-menu" class="tools-menu" role="menu" hidden>
                   <button class="tools-menu-item" role="menuitem">
-                    📎 Archivo
+                    <i data-lucide="paperclip"></i>
+                    <span class="tools-menu-text">Archivo</span>
                   </button>
                   <button class="tools-menu-item" role="menuitem">
-                    🔗 Enlace
+                    <i data-lucide="link"></i>
+                    <span class="tools-menu-text">Enlace</span>
                   </button>
                   <button class="tools-menu-item" role="menuitem">
-                    🖼️ Imagen
+                    <i data-lucide="image"></i>
+                    <span class="tools-menu-text">Imágenes</span>
                   </button>
                   <button class="tools-menu-item" role="menuitem">
-                    ⚙️ Configuración
+                    <i data-lucide="cog"></i>
+                    <span class="tools-menu-text">Configuración</span>
                   </button>
                 </div>
               </div>
@@ -178,16 +184,16 @@
                 </button>
                 <div id="options-menu" class="tools-menu" role="menu" hidden>
                   <button class="tools-menu-item" role="menuitem">
-                    💾 Guardar
+                    <i data-lucide="book-marked"></i>
+                    <span class="tools-menu-text">Guardar</span>
                   </button>
                   <button class="tools-menu-item" role="menuitem">
-                    📋 Copiar
+                    <i data-lucide="clipboard-copy"></i>
+                    <span class="tools-menu-text">Copiar</span>
                   </button>
                   <button class="tools-menu-item" role="menuitem">
-                    🗑️ Limpiar
-                  </button>
-                  <button class="tools-menu-item" role="menuitem">
-                    ⚙️ Preferencias
+                    <i data-lucide="trash-2"></i>
+                    <span class="tools-menu-text">Limpiar</span>
                   </button>
                 </div>
               </div>
@@ -199,6 +205,8 @@
         </div>
       </div>
     </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/script.js"></script>
+    <script type="module" src="/src/icons.js"></script>
   </body>
 </html>

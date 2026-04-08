@@ -17,6 +17,7 @@
     "vite": "^8.0.7"
   },
   "dependencies": {
-    "@google/genai": "^1.48.0"
+    "@google/genai": "^1.48.0",
+    "lucide": "^1.7.0"
   }
 }
