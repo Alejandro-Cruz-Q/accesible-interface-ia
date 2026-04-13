@@ -1,6 +1,6 @@
-import { chatsDatabase, OPENROUTER_API_KEY } from "./db.js";
+import { chatsDatabase, GROQ_API_KEY } from "./db.js";
 
-export async function askGemini(chatId) {
+export async function askAI(chatId) {
   const messages = chatsDatabase[chatId].messages.map((msg) => ({
     role: msg.type === "user" ? "user" : "assistant",
     content: msg.text,
@@ -10,7 +10,7 @@ export async function askGemini(chatId) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+      Authorization: `Bearer ${GROQ_API_KEY}`,
     },
     body: JSON.stringify({
       model: "llama-3.1-8b-instant",

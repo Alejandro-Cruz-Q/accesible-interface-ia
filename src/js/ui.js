@@ -1,5 +1,5 @@
 import { chatsDatabase, getCurrentChatId } from "./db.js";
-import { askGemini } from "./api.js";
+import { askAI } from "./api.js";
 import { createMessageEl } from "./messages.js";
 import { createNewChat } from "./sidebar.js";
 
@@ -101,7 +101,7 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   chatArea.scrollTop = chatArea.scrollHeight;
 
   try {
-    const botText = await askGemini(getCurrentChatId());
+    const botText = await askAI(getCurrentChatId());
     typing.remove();
 
     chatsDatabase[getCurrentChatId()].messages.push({ type: "bot", text: botText });
