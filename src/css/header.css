@@ -48,6 +48,31 @@
   border-color: transparent;
 }
 
+.header-left button {
+  background: var(--bg-terciary);
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1.125rem;
+  color: var(--bg-primary);
+  text-decoration: none;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  border-color: transparent;
+}
+
+.header-left button:hover,
+.header-left button:focus {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid black;
+}   
+
+.header-left button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent);
+  border-color: transparent;
+}
+
 /* Menú desplegable del header - despliegue hacia abajo y a la izquierda */
 #header-options-menu {
   top: 100%;

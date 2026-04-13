@@ -16,19 +16,91 @@
 
 /* 2. SIDEBAR COLAPSADO - Reduce ancho y oculta contenido */
 #sidebar.collapsed {
-  width: 60px;
+  width: 70px;
   padding: 3rem 0.5rem 2rem;
 }
 
-#sidebar-content {
+/* #sidebar-content {
   transition: opacity 0.1s ease;
-  /* transform 0.1s ease; */
+} */
+
+#sidebar .sidebar-chats {
+  transition: opacity 0.1s ease, visibility 0.1s ease;
 }
 
-#sidebar.collapsed #sidebar-content {
+#sidebar.collapsed .sidebar-chats {
   opacity: 0;
-  transform: translateX(-20px);
+  /* transform: translateX(-10px); */
   pointer-events: none;
+  visibility: hidden;
+}
+
+#sidebar.collapsed .sidebar-funcs {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+#sidebar.collapsed .sidebar-funcs h2 {
+  color: transparent;
+}
+
+/* Ocultar el texto al colapsar */
+#sidebar.collapsed .sidebar-funcs .func-label {
+  display: none;
+}
+
+/* Mostrar el icono al colapsar */
+#sidebar.collapsed .sidebar-funcs .func-icon {
+  display: flex;
+}
+
+/* Centrar el enlace cuando está colapsado */
+#sidebar.collapsed .sidebar-funcs a {
+  justify-content: center;
+  padding: 0.625rem;
+  overflow: visible;
+  position: relative;
+}
+
+/* Icono oculto por defecto (sidebar expandido) */
+.sidebar-funcs .func-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.sidebar-funcs .func-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tooltip */
+#sidebar.collapsed .sidebar-funcs a::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #111;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+#sidebar.collapsed .sidebar-funcs a:hover::after,
+#sidebar.collapsed .sidebar-funcs a:focus-visible::after {
+  opacity: 1;
 }
 
 /* 3. BOTÓN COLAPSAR - Controla expansión/colapso */
@@ -146,7 +218,7 @@ main {
 }
 
 body.sidebar-collapsed main {
-  margin-left: 60px;
+  margin-left: 70px;
 }
 
 /* 7. PROFILE ZONE - Zona de perfil al final del sidebar */
@@ -222,7 +294,7 @@ body.sidebar-collapsed main {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  /* transition: all 0.2s ease; */
   color: var(--text-primary);
 }
 
@@ -303,4 +375,10 @@ body.sidebar-collapsed main {
 
 #sidebar.collapsed .profile-zone:hover {
   background-color: transparent;
+}
+
+#sidebar.collapsed #functionalities {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }

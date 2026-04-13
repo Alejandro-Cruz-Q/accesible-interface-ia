@@ -99,6 +99,7 @@ function setActiveChat(chatId) {
 }
 
 let currentChatId = null;
+let activeReadBtn = null;
 
 function createMessageEl(type, text) {
   const wrapper = document.createElement("div");
@@ -117,13 +118,17 @@ function createMessageEl(type, text) {
   const userButtons = [
     { icon: "pencil", label: "Editar", action: "edit" },
     { icon: "copy", label: "Copiar", action: "copy" },
+    { icon: "mic-vocal", label: "Leer en voz alta", action: "read" },
+    { icon: "trash-2", label: "Eliminar", action: "delete" },
   ];
   const botButtons = [
     { icon: "refresh-cw", label: "Reescribir", action: "rewrite" },
     { icon: "copy", label: "Copiar", action: "copy" },
+    { icon: "mic-vocal", label: "Leer en voz alta", action: "read" },
     { icon: "share-2", label: "Compartir", action: "share" },
     { icon: "thumbs-up", label: "Me gusta", action: "like" },
     { icon: "thumbs-down", label: "No me gusta", action: "dislike" },
+    { icon: "trash-2", label: "Eliminar", action: "delete" },
   ];
 
   const buttons = type === "user" ? userButtons : botButtons;
@@ -150,6 +155,49 @@ function createMessageEl(type, text) {
           icono.setAttribute("data-lucide", "copy");
           lucide.createIcons({ nodes: [icono] });
         }, 1500);
+      });
+    }
+
+    if (action === "read") {
+      btn.addEventListener("click", () => {
+        // 1. Si está leyendo → cancelar y restaurar icono
+        if (window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+          icono.setAttribute("data-lucide", "mic-vocal");
+          lucide.createIcons({ nodes: [icono] });
+          activeReadBtn = null;
+          return;
+        }
+
+        // 2. Resetear botón activo anterior (otro mensaje)
+        if (activeReadBtn && activeReadBtn !== icono) {
+          activeReadBtn.setAttribute("data-lucide", "mic-vocal");
+          lucide.createIcons({ nodes: [activeReadBtn] });
+        }
+        activeReadBtn = icono;
+
+        // 3. Preparar y lanzar utterance
+        const utterance = new SpeechSynthesisUtterance(bubble.textContent);
+        utterance.lang = "es-ES";
+        utterance.rate = 1;
+        utterance.pitch = 1;
+
+        icono.setAttribute("data-lucide", "volume-2");
+        lucide.createIcons({ nodes: [icono] });
+
+        utterance.onend = () => {
+          icono.setAttribute("data-lucide", "mic-vocal");
+          lucide.createIcons({ nodes: [icono] });
+          activeReadBtn = null;
+        };
+
+        utterance.onerror = () => {
+          icono.setAttribute("data-lucide", "mic-vocal");
+          lucide.createIcons({ nodes: [icono] });
+          activeReadBtn = null;
+        };
+
+        window.speechSynthesis.speak(utterance);
       });
     }
 
@@ -353,7 +401,12 @@ document.addEventListener("click", () => closeAllMenus());
 
 document.getElementById("send-btn").addEventListener("click", async () => {
   const input = document.getElementById("chat-input");
-  if (!input.value.trim()) return;
+  if (input.value.trim()) {
+    input.focus();
+  } else {
+    input.focus();
+    return;
+  }
 
   // Si no hay chat abierto, crear uno nuevo
   if (!currentChatId) createNewChat();
@@ -428,3 +481,83 @@ document
       createNewChat();
     });
   });
+
+const chatInput = document.getElementById("chat-input");
+const voiceBtn = document.getElementById("voice-btn");
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+let recognition = null;
+let isListening = false;
+let finalTranscript = "";
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = "es-ES";
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  voiceBtn.addEventListener("click", () => {
+    if (!isListening) {
+      startVoiceRecognition();
+    } else {
+      stopVoiceRecognition();
+    }
+  });
+
+  recognition.onstart = () => {
+    isListening = true;
+    voiceBtn.classList.add("is-listening");
+    voiceBtn.setAttribute("aria-pressed", "true");
+  };
+
+  recognition.onresult = (event) => {
+    let interimTranscript = "";
+    finalTranscript = "";
+
+    for (let i = 0; i < event.results.length; i++) {
+      const text = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += text + " ";
+      } else {
+        interimTranscript += text;
+      }
+    }
+
+    voiceBtn.dataset.interim = interimTranscript;
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    voiceBtn.classList.remove("is-listening");
+    voiceBtn.setAttribute("aria-pressed", "false");
+
+    if (finalTranscript.trim()) {
+      chatInput.value = [chatInput.value.trim(), finalTranscript.trim()]
+        .filter(Boolean)
+        .join(" ");
+      chatInput.dispatchEvent(new Event("input", { bubbles: true }));
+      chatInput.focus();
+    }
+
+    voiceBtn.dataset.interim = "";
+  };
+
+  recognition.onerror = (event) => {
+    isListening = false;
+    voiceBtn.classList.remove("is-listening");
+    voiceBtn.setAttribute("aria-pressed", "false");
+    voiceBtn.dataset.interim = "";
+    console.error("Error de reconocimiento:", event.error);
+  };
+}
+
+function startVoiceRecognition() {
+  finalTranscript = "";
+  recognition.start();
+}
+
+function stopVoiceRecognition() {
+  recognition.stop();
+}

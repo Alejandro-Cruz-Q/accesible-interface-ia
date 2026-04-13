@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chatbot LLM</title>
-    <link rel="stylesheet" href="/src/base.css" />
-    <link rel="stylesheet" href="/src/header.css" />
-    <link rel="stylesheet" href="/src/responsive.css" />
-    <link rel="stylesheet" href="/src/sidebar.css" />
-    <link rel="stylesheet" href="/src/input.css" />
+    <link rel="stylesheet" href="/src/css/base.css" />
+    <link rel="stylesheet" href="/src/css/header.css" />
+    <link rel="stylesheet" href="/src/css/responsive.css" />
+    <link rel="stylesheet" href="/src/css/sidebar.css" />
+    <link rel="stylesheet" href="/src/css/messages.css" />
+    <link rel="stylesheet" href="/src/css/input.css" />
   </head>
   <body>
+    <a href="#chat-input" class="skip-link">Saltar al contenido principal</a>
     <nav id="sidebar" aria-label="Navegación chats" role="navigation">
       <button
         id="collapse-btn"
@@ -21,42 +23,71 @@
         <span>←</span>
       </button>
       <div id="sidebar-content">
-        <h2>Funcionalidades</h2>
-        <ul role="list">
-          <li><a href="#" id="new-chat-btn">Nueva conversación</a></li>
-          <li><a href="#uni">Imágenes</a></li>
-          <li><a href="#life">Espacios</a></li>
-        </ul>
-        <h3>Chats Recientes</h3>
-        <ul id="recent-chats" role="list">
-          <li>
-            <a
-              href="#"
-              class="chat-link"
-              data-chat-id="1"
-              data-chat-title="Capital de Francia"
-              >Capital de Francia</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="chat-link"
-              data-chat-id="2"
-              data-chat-title="Programación"
-              >Programación</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="chat-link"
-              data-chat-id="3"
-              data-chat-title="Inteligencia Artificial"
-              >Inteligencia Artificial</a
-            >
-          </li>
-        </ul>
+        <div class="sidebar-funcs">
+          <h2>Funcionalidades</h2>
+          <ul role="list">
+            <li>
+              <a
+                href="#Nueva conversación"
+                id="new-chat-btn"
+                data-tooltip="Nueva conversación"
+              >
+                <span class="func-icon" aria-hidden="true"
+                  ><i data-lucide="plus"></i
+                ></span>
+                <span class="func-label">Nueva conversación</span>
+              </a>
+            </li>
+            <li>
+              <a href="#Imágenes" data-tooltip="Imágenes">
+                <span class="func-icon" aria-hidden="true"
+                  ><i data-lucide="image"></i
+                ></span>
+                <span class="func-label">Imágenes</span>
+              </a>
+            </li>
+            <li>
+              <a href="#Espacios" data-tooltip="Espacios">
+                <span class="func-icon" aria-hidden="true"
+                  ><i data-lucide="blocks"></i
+                ></span>
+                <span class="func-label">Espacios</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-chats">
+          <h3>Chats Recientes</h3>
+          <ul id="recent-chats" role="list">
+            <li>
+              <a
+                href="#"
+                class="chat-link"
+                data-chat-id="1"
+                data-chat-title="Capital de Francia"
+                >Capital de Francia</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="chat-link"
+                data-chat-id="2"
+                data-chat-title="Programación"
+                >Programación</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="chat-link"
+                data-chat-id="3"
+                data-chat-title="Inteligencia Artificial"
+                >Inteligencia Artificial</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
       <div id="profile-zone" class="profile-zone">
         <div class="profile-avatar">
@@ -77,19 +108,22 @@
         </button>
         <div id="profile-menu" class="profile-menu" role="menu" hidden>
           <button class="profile-menu-item" role="menuitem">
-            👤 Ver perfil
+            <i data-lucide="user"></i>
+            <span class="profile-menu-text">Ver perfil</span>
           </button>
           <button class="profile-menu-item" role="menuitem">
-            ⚙️ Configuración
+            <i data-lucide="cog"></i>
+            <span class="profile-menu-text">Configuración</span>
           </button>
           <button class="profile-menu-item" role="menuitem">
-            🚪 Cerrar sesión
+            <i data-lucide="door-open"></i>
+            <span class="profile-menu-text">Cerrar sesión</span>
           </button>
         </div>
       </div>
     </nav>
 
-    <main>
+    <main id="main-content" role="main">
       <header id="main-header" role="banner">
         <div class="header-left">
           <button id="new-chat-btn" class="header-btn" aria-label="Nuevo chat">
@@ -97,7 +131,7 @@
           </button>
         </div>
         <div class="header-center">
-          <h2>Titulo del chat</h2>
+          <h2>Título del chat</h2>
         </div>
         <div class="header-right">
           <div class="tools-menu-wrapper">
@@ -111,12 +145,22 @@
               ⋮
             </button>
             <div id="header-options-menu" class="tools-menu" role="menu" hidden>
-              <button class="tools-menu-item" role="menuitem">✏️ Editar</button>
-              <button class="tools-menu-item" role="menuitem">📋 Copiar</button>
               <button class="tools-menu-item" role="menuitem">
-                🗑️ Eliminar
+                <i data-lucide="edit"></i>
+                <span class="tools-menu-text">Editar</span>
               </button>
-              <button class="tools-menu-item" role="menuitem">⚙️ Más</button>
+              <button class="tools-menu-item" role="menuitem">
+                <i data-lucide="copy"></i>
+                <span class="tools-menu-text">Copiar</span>
+              </button>
+              <button class="tools-menu-item" role="menuitem">
+                <i data-lucide="trash-2"></i>
+                <span class="tools-menu-text">Eliminar</span>
+              </button>
+              <button class="tools-menu-item" role="menuitem">
+                <i data-lucide="cog"></i>
+                <span class="tools-menu-text">Más</span>
+              </button>
             </div>
           </div>
         </div>
@@ -139,6 +183,7 @@
             <input
               type="text"
               id="chat-input"
+              autocomplete="off"
               placeholder="Escribe tu mensaje..."
               aria-label="Entrada de mensaje"
             />
@@ -165,10 +210,6 @@
                   <button class="tools-menu-item" role="menuitem">
                     <i data-lucide="image"></i>
                     <span class="tools-menu-text">Imágenes</span>
-                  </button>
-                  <button class="tools-menu-item" role="menuitem">
-                    <i data-lucide="cog"></i>
-                    <span class="tools-menu-text">Configuración</span>
                   </button>
                 </div>
               </div>
@@ -201,12 +242,15 @@
           </div>
           <div class="send-container">
             <button id="send-btn" aria-label="Enviar">Enviar</button>
+            <div>
+              <button id="voice-btn" aria-label="Voz">Voz</button>
+            </div>
           </div>
         </div>
       </div>
     </main>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script type="module" src="/src/script.js"></script>
-    <script type="module" src="/src/icons.js"></script>
+    <script type="module" src="/src/js/ui.js"></script>
+    <script type="module" src="/src/js/icons.js"></script>
   </body>
 </html>
