@@ -1,4 +1,4 @@
-export const OPENROUTER_API_KEY = "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";
+export const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY ?? "";
 
 export const chatsDatabase = {
   1: {
