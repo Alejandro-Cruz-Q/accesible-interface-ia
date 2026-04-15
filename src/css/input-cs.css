@@ -2,9 +2,7 @@
 #input-area {
   flex-shrink: 0;
   background: var(--bg-primary);
-  padding: clamp(0.75rem, 0.6rem + 0.5vw, 1.5rem)
-           clamp(1rem, 0.8rem + 0.8vw, 2rem)
-           clamp(1rem, 0.8rem + 0.8vw, 2rem);
+  padding: 1.5rem 2rem 2rem;
   width: 100%;
   max-width: var(--chat-width);
   margin: 0 auto;
@@ -15,20 +13,20 @@
 .input-container {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: clamp(0.5rem, 0.4rem + 0.3vw, 1rem);
-  padding: clamp(0.6rem, 0.5rem + 0.4vw, 1.25rem);
+  gap: 1rem;
   max-width: var(--chat-width);
   margin: 0 auto;
   align-items: flex-start;
   border: 2px solid var(--bg-secondary);
   border-radius: 12px;
+  padding: 1.25rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .input-left {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.5rem, 0.6rem + 0.3vw, 1rem);
+  gap: 1rem;
 }
 
 #send-container {
@@ -39,7 +37,6 @@
 #tools-container {
   display: flex;
   justify-content: flex-start;
-  gap: clamp(0.3rem, 0.55rem + 0.2vw, 0.5rem);
 }
 
 #tools-container button {
@@ -49,11 +46,10 @@
 /* Textarea */
 #chat-input {
   flex: 1;
-  font-size: clamp(0.85rem, 0.75rem + 0.35vw, 1rem);
-  padding: clamp(0.5rem, 0.7rem + 0.3vw, 1rem)
-           clamp(0.75rem, 0.6rem + 0.4vw, 1.5rem);
+  padding: 1rem 1.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 25px;
+  font-size: 1rem;
   background: white;
   transition: border-color 0.2s;
 }
@@ -75,9 +71,7 @@
   background: var(--bg-secondary);
   border: 1px solid transparent;
   border-radius: 25px;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
-  padding: clamp(0.5rem, 0.6rem + 0.2vw, 1rem)
-           clamp(0.9rem, 0.8rem + 0.35vw, 1.75rem);
+  padding: 1rem 1.75rem;
   font-weight: 500;
   cursor: pointer;
   box-sizing: border-box;
@@ -101,8 +95,7 @@
   color: var(--text-primary);
   border: 1px solid transparent;
   border-radius: 25px;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
-  padding: clamp(0.5rem, 0.65rem + 0.2vw, 1rem);
+  padding: 1rem 1rem;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -127,8 +120,7 @@
   color: var(--text-primary);
   border: 1px solid transparent;
   border-radius: 25px;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
-  padding: clamp(0.5rem, 0.65rem + 0.2vw, 1rem);
+  padding: 1rem 1rem;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -179,14 +171,13 @@
 .tools-menu-item {
   display: block;
   width: 100%;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
-  padding: clamp(0.4rem, 0.35rem + 0.2vw, 0.75rem)
-           clamp(0.6rem, 0.55rem + 0.2vw, 1rem);
+  padding: 0.75rem 1rem 0.5rem;
   text-align: left;
   background: none;
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 0.95rem;
   color: var(--text-primary);
   transition: background-color 0.2s ease;
 }

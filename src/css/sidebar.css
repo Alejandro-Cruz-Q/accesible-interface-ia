@@ -4,11 +4,12 @@
   left: 0;
   top: 0;
   width: 280px;
-  height: 100vh;
+  height: 100dvh;          /* dvh en lugar de vh → respeta barras del navegador */
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 1.5rem 1rem;
+  overflow: hidden;        /* el scroll lo gestiona .sidebar-chats, no el nav */
   box-shadow: 6px 0 20px rgba(0, 0, 0, 0.08);
-  padding: 3rem 1.5rem 2rem;
-  overflow-y: auto;
-  overflow-x: hidden;
   z-index: 100;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--bg-primary);
@@ -20,11 +21,21 @@
   padding: 3rem 0.5rem 2rem;
 }
 
-/* #sidebar-content {
+#sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                 /* ocupa todo el espacio entre el botón y el perfil */
+  min-height: 0;           /* clave: permite que flex-children reduzcan su altura */
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: opacity 0.1s ease;
-} */
+}
 
-#sidebar .sidebar-chats {
+.sidebar-chats {
+  flex: 1;                 /* absorbe el espacio libre */
+  min-height: 0;           /* clave para que overflow-y funcione dentro de flex */
+  overflow: visible;          
+  padding-right: 0.25rem;
   transition: opacity 0.1s ease, visibility 0.1s ease;
 }
 
@@ -33,6 +44,7 @@
   /* transform: translateX(-10px); */
   pointer-events: none;
   visibility: hidden;
+  overflow: hidden;
 }
 
 #sidebar.collapsed .sidebar-funcs {
@@ -140,7 +152,7 @@
 
 /* 4. TIPOGRAFÍA Y LISTAS SIDEBAR */
 #sidebar h2 {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.8rem + 0.4vw, 1.4rem);
   margin-bottom: 1.5rem;
   color: #000000;
   opacity: 1;
@@ -150,6 +162,7 @@
 }
 
 #sidebar h3 {
+  font-size: clamp(1rem, 0.7rem + 0.4vw, 1.4rem);
   margin-bottom: 1.5rem;
   white-space: nowrap;
   overflow: hidden;
@@ -189,6 +202,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  font-size: clamp(0.85rem, 0.65rem + 0.4vw, 1.1rem);
 }
 
 #sidebar a:focus-visible {
@@ -222,19 +236,30 @@ body.sidebar-collapsed main {
 }
 
 /* 7. PROFILE ZONE - Zona de perfil al final del sidebar */
+
+/* 7. PROFILE ZONE */
 .profile-zone {
-  position: absolute;
-  bottom: 2rem;
-  left: 1.5rem;
-  right: 1.5rem;
+  position: relative;      /* solo para que .profile-menu se ancle aquí */
+  flex-shrink: 0;          /* nunca se comprime */
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  /* quitar: bottom / left / right absolutos */
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.02);
   transition: all 0.3s ease;
+}
+
+/* El menú se ancla a .profile-zone */
+.profile-menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);  /* aparece encima del perfil */
+  right: 0;
+  /* resto de estilos igual */
 }
 
 .profile-avatar {
@@ -322,6 +347,21 @@ body.sidebar-collapsed main {
   overflow: hidden;
 }
 
+#sidebar.collapsed {
+  width: 70px;
+  padding: 3rem 0.5rem 1rem;
+}
+
+#sidebar.collapsed .profile-zone {
+  /* ya no necesita left/right/bottom absolutos */
+  padding: 0.5rem 0 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  border: none;
+  background-color: transparent;
+}
+
 .profile-menu[hidden] {
   display: none;
 }
@@ -331,7 +371,7 @@ body.sidebar-collapsed main {
   width: 100%;
   padding: 0.75rem 1rem;
   text-align: left;
-  background: none;
+  background: var(--bg-primary);
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
@@ -353,7 +393,7 @@ body.sidebar-collapsed main {
 }
 
 /* Cuando el sidebar está colapsado */
-#sidebar.collapsed .profile-zone {
+/* #sidebar.collapsed .profile-zone {
   left: 0.5rem;
   right: 0.5rem;
   padding: 0.5rem;
@@ -362,7 +402,7 @@ body.sidebar-collapsed main {
   gap: 0;
   border: none;
   background-color: transparent;
-}
+} */
 
 #sidebar.collapsed .profile-info {
   opacity: 0;
@@ -381,4 +421,22 @@ body.sidebar-collapsed main {
   opacity: 1;
   transform: none;
   pointer-events: auto;
+}
+
+#sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 2.75rem;    /* ← empuja solo la barra, no el contenido */
+}
+
+#sidebar-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+} 
+
+#sidebar-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }

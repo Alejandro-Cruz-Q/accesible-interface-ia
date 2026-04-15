@@ -7,7 +7,7 @@
   width: 100%;
   max-width: var(--chat-width);
   margin: 0 auto;
-  padding: clamp(1rem, 0.8rem + 0.8vw, 2rem);
+  padding: 2rem;
   box-sizing: border-box;
 }
 
@@ -30,30 +30,27 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
-  font-size: clamp(0.85rem, 0.75rem + 0.15vw, 1rem);
 }
 
 .bot-msg {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
   background: var(--bg-secondary);
   color: var(--text-primary);
+  border-radius: 12px 12px 12px 0;
   max-width: 70%;
   margin-right: auto;
   box-sizing: border-box;
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
-  padding: clamp(0.6rem, 0.5rem + 0.35vw, 1rem)
-           clamp(0.75rem, 0.65rem + 0.4vw, 1.5rem);
-  margin: clamp(0.4rem, 0.35rem + 0.25vw, 1rem) 0;
-  font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1rem);
-  border-radius: clamp(8px, 6px + 0.3vw, 12px);
 }
 
 /* Contenedor de mensaje */
 .msg-wrapper {
   display: flex;
   flex-direction: column;
-  margin: clamp(0.4rem, 0.35rem + 0.25vw, 1rem) 0;
+  margin: 1rem 0;
   max-width: 70%;
 }
 
@@ -77,10 +74,10 @@
 /* Barra de acciones */
 .msg-actions {
   display: flex;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
   opacity: 0;
   transition: opacity 0.2s ease;
-  gap: clamp(0.15rem, 0.1rem + 0.1vw, 0.25rem);
-  margin-top: clamp(0.2rem, 0.15rem + 0.15vw, 0.4rem);
 }
 
 /* Mostrar acciones al hacer hover sobre el wrapper */
@@ -94,12 +91,11 @@
   background: none;
   border: 1px solid transparent;
   border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
   cursor: pointer;
   color: var(--text-secondary);
   transition: all 0.15s ease;
-  padding: clamp(0.2rem, 0.15rem + 0.15vw, 0.3rem)
-           clamp(0.3rem, 0.25rem + 0.15vw, 0.5rem);
-  font-size: clamp(0.7rem, 0.55rem + 0.15vw, 0.85rem);
 }
 
 .msg-action-btn:hover {
@@ -114,8 +110,8 @@
 }
 
 .msg-action-btn i {
-  width: clamp(0.75rem, 0.7rem + 0.2vw, 1rem);
-  height: clamp(0.75rem, 0.7rem + 0.2vw, 1rem);
+  width: 1rem;
+  height: 1rem;
   display: block;
   pointer-events: none;
 }

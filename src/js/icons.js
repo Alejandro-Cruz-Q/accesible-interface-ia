@@ -13,7 +13,14 @@ import {
   User,
   DoorOpen,
   Blocks,
-  Plus
+  Plus,
+  Mic,
+  SendHorizontal,
+  CirclePlus,
+  FileBox,
+  GraduationCap,
+  Globe,
+  Share2
 } from "lucide";
 
 createIcons({
@@ -31,7 +38,14 @@ createIcons({
     User,
     DoorOpen,
     Blocks,
-    Plus
+    Plus,
+    Mic,
+    SendHorizontal,
+    CirclePlus,
+    FileBox,
+    GraduationCap,
+    Globe,
+    Share2
   },
   attrs: {
     width: 15,
