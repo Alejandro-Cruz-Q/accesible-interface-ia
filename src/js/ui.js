@@ -2,6 +2,7 @@ import { chatsDatabase, getCurrentChatId } from "./db.js";
 import { askAI } from "./api.js";
 import { createMessageEl } from "./messages.js";
 import { createNewChat } from "./sidebar.js";
+import { announceMessage } from "./messages.js";
 
 const MENU_CONFIG = [
   { btnId: "tools-btn",          menuId: "tools-menu"          },
@@ -90,6 +91,7 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   const userEl   = createMessageEl("user", userText);
   chatArea.appendChild(userEl);
   lucide.createIcons({ nodes: Array.from(userEl.querySelectorAll("[data-lucide]")) });
+  announceMessage("user");
 
   input.value = "";
   chatArea.scrollTop = chatArea.scrollHeight;
@@ -109,6 +111,7 @@ document.getElementById("send-btn").addEventListener("click", async () => {
     const botEl = createMessageEl("bot", botText);
     chatArea.appendChild(botEl);
     lucide.createIcons({ nodes: Array.from(botEl.querySelectorAll("[data-lucide]")) });
+    announceMessage("bot");
   } catch (error) {
     typing.remove();
     const errMsg     = document.createElement("div");

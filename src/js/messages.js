@@ -9,14 +9,30 @@ export function setActiveChat(chatId) {
   document.querySelectorAll("#sidebar li").forEach((li) => {
     li.classList.remove("active");
   });
-  const activeLink = document.querySelector(`.chat-link[data-chat-id="${chatId}"]`);
+  const activeLink = document.querySelector(
+    `.chat-link[data-chat-id="${chatId}"]`,
+  );
   if (activeLink) activeLink.closest("li").classList.add("active");
+}
+
+function announceMessage(type) {
+  const announcer = document.getElementById("chat-announcer");
+  if (!announcer) return;
+
+  const text = type === "user" ? "Mensaje enviado" : "Mensaje recibido";
+
+  announcer.textContent = "";
+  requestAnimationFrame(() => {
+    announcer.textContent = text;
+  });
 }
 
 export function createMessageEl(type, text) {
   const wrapper = document.createElement("div");
   wrapper.className =
-    type === "user" ? "msg-wrapper msg-wrapper--user" : "msg-wrapper msg-wrapper--bot";
+    type === "user"
+      ? "msg-wrapper msg-wrapper--user"
+      : "msg-wrapper msg-wrapper--bot";
 
   const bubble = document.createElement("div");
   bubble.className = type === "user" ? "user-msg" : "bot-msg";
@@ -24,22 +40,27 @@ export function createMessageEl(type, text) {
 
   const actions = document.createElement("div");
   actions.className = "msg-actions";
+  actions.setAttribute("role", "group");
+  actions.setAttribute("aria-hidden", "true");
+  actions.setAttribute("aria-label", "Acciones de mensaje");
+  type === "user"    ? actions.setAttribute("aria-label", "Acciones de mensaje enviado")
+    : actions.setAttribute("aria-label", "Acciones de mensaje recibido");
 
   const userButtons = [
-    { icon: "pencil",    label: "Editar",          action: "edit"   },
-    { icon: "copy",      label: "Copiar",           action: "copy"   },
-    { icon: "mic-vocal", label: "Leer en voz alta", action: "read"   },
-    { icon: "trash-2",   label: "Eliminar",         action: "delete" },
+    { icon: "pencil", label: "Editar", action: "edit" },
+    { icon: "copy", label: "Copiar", action: "copy" },
+    { icon: "mic-vocal", label: "Leer en voz alta", action: "read" },
+    { icon: "trash-2", label: "Eliminar", action: "delete" },
   ];
 
   const botButtons = [
-    { icon: "refresh-cw",  label: "Reescribir",      action: "rewrite" },
-    { icon: "copy",        label: "Copiar",           action: "copy"    },
-    { icon: "mic-vocal",   label: "Leer en voz alta", action: "read"    },
-    { icon: "share-2",     label: "Compartir",        action: "share"   },
-    { icon: "thumbs-up",   label: "Me gusta",         action: "like"    },
-    { icon: "thumbs-down", label: "No me gusta",      action: "dislike" },
-    { icon: "trash-2",     label: "Eliminar",         action: "delete"  },
+    { icon: "refresh-cw", label: "Reescribir", action: "rewrite" },
+    { icon: "copy", label: "Copiar", action: "copy" },
+    { icon: "mic-vocal", label: "Leer en voz alta", action: "read" },
+    { icon: "share-2", label: "Compartir", action: "share" },
+    { icon: "thumbs-up", label: "Me gusta", action: "like" },
+    { icon: "thumbs-down", label: "No me gusta", action: "dislike" },
+    { icon: "trash-2", label: "Eliminar", action: "delete" },
   ];
 
   const buttons = type === "user" ? userButtons : botButtons;
@@ -47,12 +68,14 @@ export function createMessageEl(type, text) {
   buttons.forEach(({ icon, label, action }) => {
     const btn = document.createElement("button");
     btn.className = "msg-action-btn";
+    btn.type = "button";
     btn.dataset.action = action;
     btn.setAttribute("aria-label", label);
     btn.setAttribute("title", label);
 
     const icono = document.createElement("i");
     icono.setAttribute("data-lucide", icon);
+    icono.setAttribute("aria-hidden", "true");
     btn.appendChild(icono);
 
     if (action === "copy") {
@@ -85,8 +108,8 @@ export function createMessageEl(type, text) {
         setActiveReadBtn(icono);
 
         const utterance = new SpeechSynthesisUtterance(bubble.textContent);
-        utterance.lang  = "es-ES";
-        utterance.rate  = 1;
+        utterance.lang = "es-ES";
+        utterance.rate = 1;
         utterance.pitch = 1;
 
         icono.setAttribute("data-lucide", "volume-2");
@@ -97,6 +120,7 @@ export function createMessageEl(type, text) {
           lucide.createIcons({ nodes: [icono] });
           setActiveReadBtn(null);
         };
+
         utterance.onerror = () => {
           icono.setAttribute("data-lucide", "mic-vocal");
           lucide.createIcons({ nodes: [icono] });
@@ -108,6 +132,17 @@ export function createMessageEl(type, text) {
     }
 
     actions.appendChild(btn);
+  });
+
+  wrapper.addEventListener("focusin", () => {
+    actions.setAttribute("aria-hidden", "false");
+  });
+
+  wrapper.addEventListener("focusout", (e) => {
+    // Solo oculta si el foco sale completamente del wrapper
+    if (!wrapper.contains(e.relatedTarget)) {
+      actions.setAttribute("aria-hidden", "true");
+    }
   });
 
   wrapper.appendChild(bubble);
@@ -129,7 +164,7 @@ export function renderChat(chatId) {
 
   if (chat.messages.length === 0) {
     const welcome = document.createElement("div");
-    welcome.className   = "welcome-message";
+    welcome.className = "welcome-message";
     welcome.textContent = "Escribe un mensaje para comenzar...";
     chatArea.appendChild(welcome);
     return;
@@ -138,8 +173,12 @@ export function renderChat(chatId) {
   chat.messages.forEach((msg) => {
     const msgEl = createMessageEl(msg.type, msg.text);
     chatArea.appendChild(msgEl);
-    lucide.createIcons({ nodes: Array.from(msgEl.querySelectorAll("[data-lucide]")) });
+    lucide.createIcons({
+      nodes: Array.from(msgEl.querySelectorAll("[data-lucide]")),
+    });
   });
 
   chatArea.scrollTop = chatArea.scrollHeight;
 }
+
+export { announceMessage };
