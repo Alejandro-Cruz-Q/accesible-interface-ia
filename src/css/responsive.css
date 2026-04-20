@@ -1,4 +1,4 @@
-/* 10. RESPONSIVE - Móvil/Desktop adaptativo */
+/* 10. RESPONSIVE - Móvil/Desktop adaptativo
 @media (max-width: 768px) {
   .collapse-btn { display: none; }
   #sidebar {
@@ -27,4 +27,4 @@
   #chat-area {
     padding: 1rem;
   }
-}
+} */

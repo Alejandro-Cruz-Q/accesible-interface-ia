@@ -122,7 +122,7 @@ export function renderChat(chatId) {
   setCurrentChatId(chatId);
   setActiveChat(chatId);
 
-  document.querySelector(".header-center h2").textContent = chat.title;
+  document.querySelector(".header-center h1").textContent = chat.title;
 
   const chatArea = document.getElementById("chat-area");
   chatArea.innerHTML = "";

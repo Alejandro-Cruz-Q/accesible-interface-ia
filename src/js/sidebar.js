@@ -5,6 +5,35 @@ const sidebar = document.getElementById("sidebar");
 const btn     = document.getElementById("collapse-btn");
 const body    = document.body;
 
+// ── DETECCIÓN DE ZOOM ──────────────────────────────────────────
+
+const BASE_DPR = window.devicePixelRatio;
+
+function isHighZoom() {
+  return window.devicePixelRatio >= BASE_DPR * 2;
+}
+
+function isNarrowOrZoomed() {
+  return isHighZoom() || window.innerWidth < 768;
+}
+
+function applyZoomMode() {
+  body.classList.toggle('zoom-overlay-mode', isNarrowOrZoomed());
+}
+
+applyZoomMode();
+window.addEventListener('resize', applyZoomMode);
+// También responde a cambios de zoom (visualViewport)
+window.visualViewport?.addEventListener('resize', applyZoomMode);
+
+document.getElementById('sidebar-overlay')?.addEventListener('click', () => {
+  sidebar.classList.add('collapsed');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.querySelector('span').textContent = '→';
+  body.classList.add('sidebar-collapsed');
+  document.getElementById('sidebar-overlay').style.display = 'none'; // ← añadir
+}); 
+
 export function createNewChat() {
   const id    = incrementNextChatId();
   const title = `Nueva conversación ${id}`;
@@ -51,6 +80,14 @@ btn.addEventListener("click", () => {
   btn.setAttribute("aria-expanded", !isCollapsed);
   btn.querySelector("span").textContent = isCollapsed ? "→" : "←";
   body.classList.toggle("sidebar-collapsed", isCollapsed);
+
+  // ── NUEVO: gestionar overlay ──
+  const overlay = document.getElementById("sidebar-overlay");
+  if (isCollapsed) {
+    overlay.style.display = "none";      // ocultar al colapsar
+  } else if (isNarrowOrZoomed()) {
+    overlay.style.display = "block";     // mostrar solo si hay zoom alto
+  }
 });
 
 // Toggle móvil

@@ -13,6 +13,7 @@
   </head>
   <body>
     <a href="#chat-input" class="skip-link">Saltar al contenido principal</a>
+    <div id="sidebar-overlay" aria-hidden="true"></div>
     <nav id="sidebar" aria-label="Navegación chats" role="navigation">
       <button
         id="collapse-btn"
@@ -131,7 +132,7 @@
           </button>
         </div>
         <div class="header-center">
-          <h2>Título del chat</h2>
+          <h1>Título del chat</h1>
         </div>
         <div class="header-right">
           <div class="tools-menu-wrapper">
@@ -251,8 +252,12 @@
             </div>
           </div>
         </div>
+        <span id="privacy-notice" class="privacy-notice">
+          Se aplican los Términos de Servicio y la Política de Privacidad. Esto es una IA y puede cometer errores, incluso sobre personas. <a href="https://github.com/Alejandro-Cruz-Q/accesible-interface-ia.git">Tu privacidad</a>
+        </span>
       </div>
     </main>
+    <div id="sidebar-backdrop"></div>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/js/ui.js"></script>
     <script type="module" src="/src/js/icons.js"></script>
