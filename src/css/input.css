@@ -90,9 +90,8 @@
 }
 
 .menu-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Botón enviar */
@@ -116,9 +115,8 @@
 }
 
 #send-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Botón voz */
@@ -144,9 +142,8 @@
 }
 
 #voice-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 #voice-btn.is-listening {
@@ -178,10 +175,12 @@
 
 .tools-menu-item {
   display: block;
-  width: 100%;
+  width: 95%;
   font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
   padding: clamp(0.4rem, 0.35rem + 0.2vw, 0.75rem)
            clamp(0.6rem, 0.55rem + 0.2vw, 1rem);
+  margin: clamp(0.2rem, 0.15rem + 0.1vw, 0.3rem);
+  margin-right: clamp(0.2rem, 0.15rem + 0.1vw, 0.3rem);
   text-align: left;
   background: none;
   border: 1px solid transparent;
@@ -193,6 +192,7 @@
 
 .tools-menu-item i {
   flex-shrink: 0;
+  padding:clamp(0.4rem, 0.35rem + 0.2vw, 0.75rem);
 }
 
 .tools-menu-text {
@@ -203,28 +203,30 @@
 .tools-menu-item:hover,
 .tools-menu-item:focus {
   outline: none;
-  box-shadow: inset 0 0 0 2px var(--text-primary);
+  border: 1px solid var(--text-primary);
 }
 
 .tools-menu-item:focus-visible {
-  outline: none;
-  box-shadow: inset 0 0 0 2px var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-#input-area .privacy-notice {
+.privacy-notice {
   justify-content: center;
   margin-top: clamp(0.3rem, 0.25rem + 0.15vw, 0.5rem);
   font-size: clamp(0.75rem, 0.3rem + 0.2vw, 0.9rem);
   padding: 0 clamp(0.75rem, 0.6rem + 0.4vw, 1.5rem);
-  display: flex;
+  display: inline;
   color: var(--text-secondary);
 }
-
-#input-area a {
+zº
+#privacy-notice a {
   color: var(--text-primary);
+  display: inline;
+  white-space: normal;
 }
 
-#input-area a:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--accent);
+#privacy-notice a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

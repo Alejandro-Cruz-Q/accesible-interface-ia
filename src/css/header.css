@@ -24,32 +24,6 @@
   margin: 0;
 }
 
-.header-btn {
-  display: flex;
-  align-items: center;
-  color: var(--text-primary);
-  text-decoration: none;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  background: var(--bg-secondary);
-  border-color: transparent;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
-  padding: clamp(0.45rem, 0.4rem + 0.2vw, 0.875rem)
-           clamp(0.6rem, 0.55rem + 0.2vw, 1.125rem);
-}
-
-.header-btn:hover,
-.header-btn:focus {
-  background: var(--bg-primary);
-  border: 1px solid black;
-}
-
-.header-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
-}
-
 .header-left button {
   background: var(--bg-terciary);
   display: flex;
@@ -64,17 +38,15 @@
            clamp(0.6rem, 0.8rem + 0.2vw, 1.125rem);
 }
 
-.header-left button:hover,
-.header-left button:focus {
+.header-left button:hover {
   background: var(--bg-primary);
   color: var(--text-primary);
   border: 1px solid black;
 }   
 
 .header-left button:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Menú desplegable del header - despliegue hacia abajo y a la izquierda */

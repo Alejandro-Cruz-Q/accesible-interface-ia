@@ -4,11 +4,11 @@
   left: 0;
   top: 0;
   width: 280px;
-  height: 100dvh;          /* dvh en lugar de vh → respeta barras del navegador */
+  height: 100dvh; /* dvh en lugar de vh → respeta barras del navegador */
   display: flex;
   flex-direction: column;
   padding: 3rem 1.5rem 1rem;
-  overflow: hidden;        /* el scroll lo gestiona .sidebar-chats, no el nav */
+  overflow: hidden; /* el scroll lo gestiona .sidebar-chats, no el nav */
   box-shadow: 6px 0 20px rgba(0, 0, 0, 0.08);
   z-index: 100;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -24,19 +24,29 @@
 #sidebar-content {
   display: flex;
   flex-direction: column;
-  flex: 1;                 /* ocupa todo el espacio entre el botón y el perfil */
-  min-height: 0;           /* clave: permite que flex-children reduzcan su altura */
+  flex: 1; /* ocupa todo el espacio entre el botón y el perfil */
+  min-height: 0; /* clave: permite que flex-children reduzcan su altura */
   overflow-y: auto;
   overflow-x: hidden;
   transition: opacity 0.1s ease;
 }
 
 .sidebar-chats {
-  flex: 1;                 /* absorbe el espacio libre */
-  min-height: 0;           /* clave para que overflow-y funcione dentro de flex */
-  overflow: visible;          
-  padding-right: 0.25rem;
-  transition: opacity 0.1s ease, visibility 0.1s ease;
+  flex: 1; /* absorbe el espacio libre */
+  min-height: 0; /* clave para que overflow-y funcione dentro de flex */
+  overflow: visible;
+  padding-right: 0.3rem;
+  padding-left: 0.3rem;
+  transition:
+    opacity 0.1s ease,
+    visibility 0.1s ease;
+}
+
+.sidebar-funcs {
+  opacity: 1;
+  padding-right: 0.3rem;
+  padding-left: 0.3rem;
+  /* transition: opacity 0.1s ease, transform 0.3s ease; */
 }
 
 #sidebar.collapsed .sidebar-chats {
@@ -151,6 +161,7 @@
 .collapse-btn:focus-visible {
   transition: all 0.1s ease;
   outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* 4. TIPOGRAFÍA Y LISTAS SIDEBAR */
@@ -184,13 +195,6 @@
   border-radius: 12px;
 }
 
-/* Hover → borde negro */
-#sidebar li:hover,
-#sidebar li:focus-within {
-  background: var(--bg-primary);
-  border-color: var(--text-primary);
-}
-
 /* 5. ENLACES SIDEBAR */
 #sidebar a {
   display: flex;
@@ -198,8 +202,6 @@
   padding: 0.875rem 1.125rem;
   color: black;
   text-decoration: none;
-  /* border-radius: 12px; */
-  /* transition: all 0.25s ease; */
   gap: 0.75rem;
   white-space: nowrap;
   overflow: hidden;
@@ -208,11 +210,17 @@
   font-size: clamp(0.85rem, 0.65rem + 0.4vw, 1.1rem);
 }
 
+#sidebar a:hover,
+#sidebar a:focus {
+  border: 2px solid var(--text-primary);
+  border-radius: 12px;
+}
+  
 #sidebar a:focus-visible {
   border-radius: 12px;
-  outline: none;
-  box-shadow: 0 0 0 3px var(--accent);
-  border-color: transparent;
+  /* box-shadow: 0 0 0 3px var(--accent); */ 
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Chat activo en la barra lateral */
@@ -242,8 +250,8 @@ body.sidebar-collapsed main {
 
 /* 7. PROFILE ZONE */
 .profile-zone {
-  position: relative;      /* solo para que .profile-menu se ancle aquí */
-  flex-shrink: 0;          /* nunca se comprime */
+  position: relative; /* solo para que .profile-menu se ancle aquí */
+  flex-shrink: 0; /* nunca se comprime */
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -260,7 +268,7 @@ body.sidebar-collapsed main {
 /* El menú se ancla a .profile-zone */
 .profile-menu {
   position: absolute;
-  bottom: calc(100% + 0.5rem);  /* aparece encima del perfil */
+  bottom: calc(100% + 0.5rem); /* aparece encima del perfil */
   right: 0;
   /* resto de estilos igual */
 }
@@ -326,9 +334,11 @@ body.sidebar-collapsed main {
   color: var(--text-primary);
 }
 
-.profile-menu-btn:hover {
-  background-color: rgba(0, 0, 0, 0.08);
-  border-color: rgba(0, 0, 0, 0.1);
+.profile-menu-btn:hover,
+.profile-menu-btn:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
 }
 
 .profile-menu-btn:focus-visible {
@@ -371,8 +381,9 @@ body.sidebar-collapsed main {
 
 .profile-menu-item {
   display: flex;
-  width: 100%;
+  width: 95%;
   padding: 0.75rem 1rem;
+  margin: 0.25rem;
   text-align: left;
   background: var(--bg-primary);
   border: 1px solid transparent;
@@ -385,27 +396,16 @@ body.sidebar-collapsed main {
   gap: 0.5rem;
 }
 
-.profile-menu-item:hover {
+.profile-menu-item:hover,
+.profile-menu-item:focus {
   outline: none;
-  box-shadow: inset 0 0 0 2px var(--text-primary);
+  border: 1px solid var(--text-primary);
 }
 
 .profile-menu-item:focus-visible {
-  outline: none;
-  box-shadow: inset 0 0 0 2px var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
-
-/* Cuando el sidebar está colapsado */
-/* #sidebar.collapsed .profile-zone {
-  left: 0.5rem;
-  right: 0.5rem;
-  padding: 0.5rem;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0;
-  border: none;
-  background-color: transparent;
-} */
 
 #sidebar.collapsed .profile-info {
   opacity: 0;
@@ -432,13 +432,13 @@ body.sidebar-collapsed main {
 
 #sidebar-content::-webkit-scrollbar-track {
   background: transparent;
-  margin-top: 2.75rem;    /* ← empuja solo la barra, no el contenido */
+  margin-top: 2.75rem; /* ← empuja solo la barra, no el contenido */
 }
 
 #sidebar-content::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 999px;
-} 
+}
 
 #sidebar-content::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.4);
