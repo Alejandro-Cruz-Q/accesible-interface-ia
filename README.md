@@ -60,18 +60,6 @@ Abre el navegador en `http://localhost:5173` (o el puerto que indique Vite).
 
 ***
 
-## ✨ Funcionalidades principales
-
-- **Conversación con IA** mediante el modelo `llama-3.1-8b-instant` de Groq.
-- **Múltiples chats** con historial en memoria, gestionados desde la barra lateral.
-- **Acciones sobre mensajes**: copiar, editar, leer en voz alta, reescribir, compartir, dar feedback y eliminar.
-- **Reconocimiento de voz** para dictar mensajes (Web Speech API).
-- **Barra lateral colapsable** con tooltips automáticos en modo compacto.
-- **Opciones de contexto** (modelo, investigación, búsqueda) activables como chips visuales.
-- **Accesibilidad**: roles ARIA, navegación por teclado completa, anuncios de mensajes y skip link.
-
-***
-
 ## 🔑 Variables de entorno
 
 | Variable | Descripción |
