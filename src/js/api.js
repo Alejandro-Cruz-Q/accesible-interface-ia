@@ -1,4 +1,5 @@
-import { chatsDatabase, GROQ_API_KEY } from "./db.js";
+import { chatsDatabase } from "./db.js";
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 export async function askAI(chatId) {
   const messages = chatsDatabase[chatId].messages.map((msg) => ({

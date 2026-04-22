@@ -1,8 +1,7 @@
 #main-header {
   position: relative;
   border-bottom: 1px solid var(--bg-secondary);
-  padding: clamp(0.5rem, 2em + 0.3vw, 1rem)
-           clamp(1rem, 1.6rem + 0.4vw, 2rem);
+  padding: clamp(0.5rem, 2em + 0.3vw, 1rem) clamp(1rem, 1.6rem + 0.4vw, 2rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,14 +33,14 @@
   border-color: transparent;
   font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
   padding: clamp(0.45rem, 0.65rem + 0.2vw, 0.875rem)
-           clamp(0.6rem, 0.8rem + 0.2vw, 1.125rem);
+    clamp(0.6rem, 0.8rem + 0.2vw, 1.125rem);
 }
 
 .header-left button:hover {
   background: var(--bg-primary);
   color: var(--text-primary);
   border: 1px solid black;
-}   
+}
 
 .header-left button:focus-visible {
   outline: 2px solid var(--accent);
@@ -57,7 +56,7 @@
   margin-bottom: 0;
 }
 
-#header-options-btn{
+#header-options-btn {
   padding: clamp(0.5rem, 0.6rem + 0.2vw, 1rem)
-           clamp(0.75rem, 1rem + 0.2vw, 1.5rem);
+    clamp(0.75rem, 1rem + 0.2vw, 1.5rem);
 }

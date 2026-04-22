@@ -31,6 +31,14 @@ document.getElementById("sidebar-overlay")?.addEventListener("click", () => {
   document.getElementById("sidebar-overlay").style.display = "none";
 });
 
+document.querySelectorAll(".chat-link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const chatId = parseInt(link.dataset.chatId);
+    renderChat(chatId);
+  });
+});
+
 export function createNewChat() {
   const id = incrementNextChatId();
   const title = `Nueva conversación ${id}`;
@@ -56,19 +64,6 @@ export function createNewChat() {
   renderChat(id);
 }
 
-document.querySelectorAll(".chat-link").forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const chatId = parseInt(link.dataset.chatId);
-    renderChat(chatId);
-  });
-});
-
-const profileImg = document.getElementById("profile-img");
-if (profileImg && typeof profilePic !== "undefined") {
-  profileImg.src = profilePic;
-}
-
 btn.addEventListener("click", () => {
   const isCollapsed = sidebar.classList.toggle("collapsed");
   btn.setAttribute("aria-expanded", !isCollapsed);
@@ -81,8 +76,4 @@ btn.addEventListener("click", () => {
   } else if (isNarrowOrZoomed()) {
     overlay.style.display = "block";
   }
-});
-
-document.getElementById("toggle")?.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
 });

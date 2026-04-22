@@ -6,7 +6,6 @@
     <title>Chatbot LLM</title>
     <link rel="stylesheet" href="/src/css/base.css" />
     <link rel="stylesheet" href="/src/css/header.css" />
-    <link rel="stylesheet" href="/src/css/responsive.css" />
     <link rel="stylesheet" href="/src/css/sidebar.css" />
     <link rel="stylesheet" href="/src/css/messages.css" />
     <link rel="stylesheet" href="/src/css/input.css" />
@@ -37,27 +36,27 @@
               <a
                 href="#Nueva conversación"
                 id="new-chat-btn"
-                data-tooltip="Nueva conversación"
+                aria-label="Nueva conversación"
               >
-                <span class="func-icon" aria-hidden="true"
-                  ><i data-lucide="circlePlus"></i
-                ></span>
+                <span class="func-icon" aria-hidden="true">
+                  <i data-lucide="circle-plus"></i>
+                </span>
                 <span class="func-label">Nueva conversación</span>
               </a>
             </li>
             <li>
-              <a href="#Imágenes" data-tooltip="Imágenes">
-                <span class="func-icon" aria-hidden="true"
-                  ><i data-lucide="image"></i
-                ></span>
+              <a href="#Imágenes" aria-label="Imágenes">
+                <span class="func-icon" aria-hidden="true">
+                  <i data-lucide="image"></i>
+                </span>
                 <span class="func-label">Imágenes</span>
               </a>
             </li>
             <li>
-              <a href="#Espacios" data-tooltip="Espacios">
-                <span class="func-icon" aria-hidden="true"
-                  ><i data-lucide="blocks"></i
-                ></span>
+              <a href="#Espacios" aria-label="Espacios">
+                <span class="func-icon" aria-hidden="true">
+                  <i data-lucide="blocks"></i>
+                </span>
                 <span class="func-label">Espacios</span>
               </a>
             </li>
@@ -106,7 +105,7 @@
         </div>
         <button
           id="profile-menu-btn"
-          class="profile-menu-btn"
+          class="profile-menu-btn has-tooltip"
           aria-label="Menú de perfil"
           aria-expanded="false"
           aria-haspopup="menu"
@@ -144,7 +143,7 @@
           <div class="tools-menu-wrapper">
             <button
               id="header-options-btn"
-              class="header-btn menu-btn"
+              class="header-btn menu-btn has-tooltip tooltip-bottom"
               aria-label="Más opciones"
               aria-expanded="false"
               aria-haspopup="menu"
@@ -267,11 +266,21 @@
             </div>
           </div>
           <div class="send-container">
-            <button id="send-btn" aria-label="Enviar">
+            <button
+              id="send-btn"
+              class="send-action-btn has-tooltip"
+              aria-label="Enviar"
+              aria-describedby="send-tooltip"
+            >
               <i data-lucide="send-horizontal"></i>
             </button>
             <div>
-              <button id="voice-btn" aria-label="Voz">
+              <button
+                id="voice-btn"
+                class="send-action-btn has-tooltip"
+                aria-label="Voz"
+                aria-describedby="voice-tooltip"
+              >
                 <i data-lucide="mic"></i>
               </button>
             </div>

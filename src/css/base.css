@@ -47,10 +47,12 @@ main {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  min-height: 100vh;
+  padding: 0;
 }
 
 body.sidebar-collapsed main {
-  margin-left: 60px;
+  margin-left: 70px;
 }
 
 .skip-link {
@@ -72,4 +74,122 @@ body.sidebar-collapsed main {
   top: 1rem;
   outline: 3px solid var(--accent);
   box-shadow: 0 0 0 1px var(--accent);
+}
+
+.tools-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tools-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 0.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-primary);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.tools-menu-item {
+  display: block;
+  width: 95%;
+  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem);
+  padding: clamp(0.4rem, 0.35rem + 0.2vw, 0.75rem)
+    clamp(0.6rem, 0.55rem + 0.2vw, 1rem);
+  margin: clamp(0.2rem, 0.15rem + 0.1vw, 0.3rem);
+  margin-right: clamp(0.2rem, 0.15rem + 0.1vw, 0.3rem);
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+  pointer-events: auto;
+}
+
+.tools-menu-item i {
+  flex-shrink: 0;
+  padding: clamp(0.4rem, 0.35rem + 0.2vw, 0.75rem);
+}
+
+.tools-menu-text {
+  position: relative;
+  top: -2px;
+}
+
+.tools-menu-item:hover,
+.tools-menu-item:focus {
+  outline: none;
+  border: 1px solid var(--text-primary);
+}
+
+.tools-menu-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.has-tooltip {
+  position: relative; /* imprescindible */
+}
+
+.has-tooltip::after {
+  content: attr(aria-label);
+  position: absolute; /* imprescindible */
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: #111;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+  z-index: 100;
+}
+
+.has-tooltip:hover::after,
+.has-tooltip:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.has-tooltip.tooltip-bottom::after {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+
+.has-tooltip.tooltip-right::after {
+  bottom: auto;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+}
+
+.has-tooltip.tooltip-right:hover::after,
+.has-tooltip.tooltip-right:focus-visible::after {
+  transform: translateY(-50%) scale(1);
+}
+
+.has-tooltip.tooltip-bottom::after {
+  bottom: auto;
+  top: calc(100% + 8px);
+  transform: translateX(-50%) scale(0.95);
+}
+
+.has-tooltip.tooltip-bottom:hover::after,
+.has-tooltip.tooltip-bottom:focus-visible::after {
+  transform: translateX(-50%) scale(1);
 }

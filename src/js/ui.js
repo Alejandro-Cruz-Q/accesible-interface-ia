@@ -1,8 +1,7 @@
 import { chatsDatabase, getCurrentChatId } from "./db.js";
 import { askAI } from "./api.js";
-import { createMessageEl } from "./messages.js";
+import { createMessageEl, announceMessage } from "./messages.js";
 import { createNewChat } from "./sidebar.js";
-import { announceMessage } from "./messages.js";
 
 const MENU_CONFIG = [
   { btnId: "tools-btn", menuId: "tools-menu" },
@@ -152,14 +151,12 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   chatArea.scrollTop = chatArea.scrollHeight;
 });
 
-document
-  .querySelectorAll("#new-chat-btn, #new-conversation-btn")
-  .forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      createNewChat();
-    });
+document.querySelectorAll("#new-chat-btn").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    createNewChat();
   });
+});
 
 const chatInput = document.getElementById("chat-input");
 const voiceBtn = document.getElementById("voice-btn");
@@ -229,24 +226,16 @@ function stopVoiceRecognition() {
   recognition.stop();
 }
 
-(function () {
-  "use strict";
+const activeOptions = new Map();
 
-  const activeOptions = new Map(); // key → { label, chipEl }
+const optionsBtn = document.getElementById("options-btn");
+const optionsMenu = document.getElementById("options-menu");
+const chipsWrapper = document.getElementById("active-options-container");
 
-  const optionsBtn = document.getElementById("options-btn");
-  const optionsMenu = document.getElementById("options-menu");
-  const chipsWrapper = document.getElementById("active-options-container");
-
-  if (!optionsBtn || !optionsMenu || !chipsWrapper) {
-    console.warn("[active-options] Faltan elementos DOM requeridos.");
-    return;
-  }
-
+if (optionsBtn && optionsMenu && chipsWrapper) {
   function removeChip(key) {
     const entry = activeOptions.get(key);
     if (!entry) return;
-
     entry.chipEl.remove();
     entry.itemEl.classList.remove("is-active");
     activeOptions.delete(key);
@@ -260,7 +249,6 @@ function stopVoiceRecognition() {
     chip.innerHTML =
       `<span class="chip-label">${label}</span>` +
       `<span class="chip-close" aria-hidden="true">✕</span>`;
-
     chip.addEventListener("click", () => removeChip(key));
     chip.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -268,7 +256,6 @@ function stopVoiceRecognition() {
         removeChip(key);
       }
     });
-
     return chip;
   }
 
@@ -293,8 +280,9 @@ function stopVoiceRecognition() {
       const label =
         item.querySelector(".tools-menu-text")?.textContent.trim() ||
         item.textContent.trim();
-
       activateOption(key, label, item);
     });
   });
-})();
+} else {
+  console.warn("[active-options] Faltan elementos DOM requeridos.");
+}

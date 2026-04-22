@@ -52,21 +52,14 @@ export const chatsDatabase = {
 };
 
 export let currentChatId = null;
-export let activeReadBtn = null;
 export let nextChatId = Object.keys(chatsDatabase).length + 1;
 
 export function setCurrentChatId(id) {
   currentChatId = id;
-}
-export function setActiveReadBtn(btn) {
-  activeReadBtn = btn;
 }
 export function incrementNextChatId() {
   return nextChatId++;
 }
 export function getCurrentChatId() {
   return currentChatId;
-}
-export function getActiveReadBtn() {
-  return activeReadBtn;
 }

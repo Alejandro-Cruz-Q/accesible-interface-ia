@@ -1,14 +1,21 @@
-import {
-  chatsDatabase,
-  getActiveReadBtn,
-  setCurrentChatId,
-  setActiveReadBtn,
-} from "./db.js";
+import { chatsDatabase, setCurrentChatId } from "./db.js";
+
+let activeReadBtn = null;
+
+function setActiveReadBtn(btn) {
+  activeReadBtn = btn;
+}
+
+function getActiveReadBtn() {
+  return activeReadBtn;
+}
 
 export function setActiveChat(chatId) {
-  document.querySelectorAll("#sidebar li").forEach((li) => {
-    li.classList.remove("active");
-  });
+  document
+    .querySelectorAll(".sidebar-funcs li, .sidebar-chats li")
+    .forEach((li) => {
+      li.classList.remove("active");
+    });
   const activeLink = document.querySelector(
     `.chat-link[data-chat-id="${chatId}"]`,
   );
@@ -42,10 +49,12 @@ export function createMessageEl(type, text) {
   actions.className = "msg-actions";
   actions.setAttribute("role", "group");
   actions.setAttribute("aria-hidden", "true");
-  actions.setAttribute("aria-label", "Acciones de mensaje");
-  type === "user"
-    ? actions.setAttribute("aria-label", "Acciones de mensaje enviado")
-    : actions.setAttribute("aria-label", "Acciones de mensaje recibido");
+  actions.setAttribute(
+    "aria-label",
+    type === "user"
+      ? "Acciones de mensaje enviado"
+      : "Acciones de mensaje recibido",
+  );
 
   const userButtons = [
     { icon: "pencil", label: "Editar", action: "edit" },
@@ -68,11 +77,10 @@ export function createMessageEl(type, text) {
 
   buttons.forEach(({ icon, label, action }) => {
     const btn = document.createElement("button");
-    btn.className = "msg-action-btn";
+    btn.className = "msg-action-btn has-tooltip";
     btn.type = "button";
     btn.dataset.action = action;
     btn.setAttribute("aria-label", label);
-    btn.setAttribute("title", label);
 
     const icono = document.createElement("i");
     icono.setAttribute("data-lucide", icon);
