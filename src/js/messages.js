@@ -43,7 +43,8 @@ export function createMessageEl(type, text) {
   actions.setAttribute("role", "group");
   actions.setAttribute("aria-hidden", "true");
   actions.setAttribute("aria-label", "Acciones de mensaje");
-  type === "user"    ? actions.setAttribute("aria-label", "Acciones de mensaje enviado")
+  type === "user"
+    ? actions.setAttribute("aria-label", "Acciones de mensaje enviado")
     : actions.setAttribute("aria-label", "Acciones de mensaje recibido");
 
   const userButtons = [

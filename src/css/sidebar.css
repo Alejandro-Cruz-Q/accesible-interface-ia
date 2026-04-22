@@ -1,21 +1,19 @@
-/* 1. SIDEBAR BASE - Estructura y posicionamiento general */
 #sidebar {
   position: fixed;
   left: 0;
   top: 0;
   width: 280px;
-  height: 100dvh; /* dvh en lugar de vh → respeta barras del navegador */
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   padding: 3rem 1.5rem 1rem;
-  overflow: hidden; /* el scroll lo gestiona .sidebar-chats, no el nav */
+  overflow: hidden;
   box-shadow: 6px 0 20px rgba(0, 0, 0, 0.08);
   z-index: 100;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--bg-primary);
 }
 
-/* 2. SIDEBAR COLAPSADO - Reduce ancho y oculta contenido */
 #sidebar.collapsed {
   width: 70px;
   padding: 3rem 0.5rem 2rem;
@@ -24,16 +22,16 @@
 #sidebar-content {
   display: flex;
   flex-direction: column;
-  flex: 1; /* ocupa todo el espacio entre el botón y el perfil */
-  min-height: 0; /* clave: permite que flex-children reduzcan su altura */
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   transition: opacity 0.1s ease;
 }
 
 .sidebar-chats {
-  flex: 1; /* absorbe el espacio libre */
-  min-height: 0; /* clave para que overflow-y funcione dentro de flex */
+  flex: 1;
+  min-height: 0;
   overflow: visible;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
@@ -46,12 +44,10 @@
   opacity: 1;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
-  /* transition: opacity 0.1s ease, transform 0.3s ease; */
 }
 
 #sidebar.collapsed .sidebar-chats {
   opacity: 0;
-  /* transform: translateX(-10px); */
   pointer-events: none;
   visibility: hidden;
   overflow: hidden;
@@ -70,17 +66,14 @@
   overflow: hidden;
 }
 
-/* Ocultar el texto al colapsar */
 #sidebar.collapsed .sidebar-funcs .func-label {
   display: none;
 }
 
-/* Mostrar el icono al colapsar */
 #sidebar.collapsed .sidebar-funcs .func-icon {
   display: flex;
 }
 
-/* Centrar el enlace cuando está colapsado */
 #sidebar.collapsed .sidebar-funcs a {
   justify-content: center;
   padding: 0.625rem;
@@ -88,7 +81,6 @@
   position: relative;
 }
 
-/* Icono oculto por defecto (sidebar expandido) */
 .sidebar-funcs .func-icon {
   display: none;
   align-items: center;
@@ -104,7 +96,6 @@
   height: 20px;
 }
 
-/* Tooltip */
 #sidebar.collapsed .sidebar-funcs a::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -128,7 +119,6 @@
   opacity: 1;
 }
 
-/* 3. BOTÓN COLAPSAR - Controla expansión/colapso */
 .collapse-btn {
   position: absolute;
   top: 1rem;
@@ -142,7 +132,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  /* box-shadow: 4px 0 12px rgba(0,0,0,0.15); */
   font-weight: bold;
   font-size: 1.1rem;
 }
@@ -154,7 +143,6 @@
   font-size: 1.5rem;
   transition: all 0.3s ease;
   transform: scale(1.05);
-  /* box-shadow: 6px 0 16px rgba(0,0,0,0.2); */
   outline: none;
 }
 
@@ -164,7 +152,6 @@
   outline-offset: 2px;
 }
 
-/* 4. TIPOGRAFÍA Y LISTAS SIDEBAR */
 #sidebar h2 {
   font-size: clamp(1rem, 0.8rem + 0.4vw, 1.4rem);
   margin-bottom: 1.5rem;
@@ -188,14 +175,16 @@
   margin-bottom: 2rem;
 }
 
-/* Por defecto: sin borde visible */
 #sidebar li {
   border: 2px solid transparent;
   margin-bottom: 0.1rem;
   border-radius: 12px;
 }
 
-/* 5. ENLACES SIDEBAR */
+#sidebar li:hover{
+  border-color: var(--text-primary);
+}
+
 #sidebar a {
   display: flex;
   align-items: center;
@@ -209,21 +198,13 @@
   min-width: 0;
   font-size: clamp(0.85rem, 0.65rem + 0.4vw, 1.1rem);
 }
-
-#sidebar a:hover,
-#sidebar a:focus {
-  border: 2px solid var(--text-primary);
-  border-radius: 12px;
-}
   
 #sidebar a:focus-visible {
   border-radius: 12px;
-  /* box-shadow: 0 0 0 3px var(--accent); */ 
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Chat activo en la barra lateral */
 #sidebar li.active {
   background: var(--bg-primary);
   border-color: var(--text-primary);
@@ -234,7 +215,6 @@
   font-style: italic;
 }
 
-/* 6. MAIN CONTENT - Ajusta según estado sidebar */
 main {
   margin-left: 280px;
   min-height: 100vh;
@@ -246,31 +226,25 @@ body.sidebar-collapsed main {
   margin-left: 70px;
 }
 
-/* 7. PROFILE ZONE - Zona de perfil al final del sidebar */
-
-/* 7. PROFILE ZONE */
 .profile-zone {
-  position: relative; /* solo para que .profile-menu se ancle aquí */
-  flex-shrink: 0; /* nunca se comprime */
+  position: relative;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem 1rem 1rem;
   margin-top: 0;
   margin-bottom: 1rem;
-  /* quitar: bottom / left / right absolutos */
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.02);
   transition: all 0.3s ease;
 }
 
-/* El menú se ancla a .profile-zone */
 .profile-menu {
   position: absolute;
-  bottom: calc(100% + 0.5rem); /* aparece encima del perfil */
+  bottom: calc(100% + 0.5rem);
   right: 0;
-  /* resto de estilos igual */
 }
 
 .profile-avatar {
@@ -330,7 +304,6 @@ body.sidebar-collapsed main {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transition: all 0.2s ease; */
   color: var(--text-primary);
 }
 
@@ -366,7 +339,6 @@ body.sidebar-collapsed main {
 }
 
 #sidebar.collapsed .profile-zone {
-  /* ya no necesita left/right/bottom absolutos */
   padding: 0.5rem 0 0;
   flex-direction: column;
   justify-content: center;
@@ -392,8 +364,12 @@ body.sidebar-collapsed main {
   font-size: 0.95rem;
   color: var(--text-primary);
   transition: background-color 0.2s ease;
-  /* align-items: center; */
   gap: 0.5rem;
+}
+
+.profile-menu-text {
+  position: relative;
+  top: -2px;
 }
 
 .profile-menu-item:hover,
@@ -432,7 +408,7 @@ body.sidebar-collapsed main {
 
 #sidebar-content::-webkit-scrollbar-track {
   background: transparent;
-  margin-top: 2.75rem; /* ← empuja solo la barra, no el contenido */
+  margin-top: 2.75rem;
 }
 
 #sidebar-content::-webkit-scrollbar-thumb {
@@ -444,27 +420,20 @@ body.sidebar-collapsed main {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* ── MODO ZOOM-OVERLAY (zoom ≥ 200%) ─────────────────────────── */
-
-/* En modo zoom, el main ocupa todo el ancho desde los 70px colapsados.
-   Ya no se desplaza cuando la sidebar se expande. */
 body.zoom-overlay-mode main {
   margin-left: 70px !important;
   transition: none;
 }
 
-/* La sidebar expandida flota encima del main con sombra pronunciada */
 body.zoom-overlay-mode #sidebar:not(.collapsed) {
   z-index: 300;
   box-shadow: 8px 0 32px rgba(0, 0, 0, 0.22);
 }
 
-/* Overlay oscuro detrás de la sidebar para indicar que está flotando */
 body.zoom-overlay-mode #sidebar-overlay {
   display: block;
 }
 
-/* El overlay cubre el main pero no la sidebar */
 #sidebar-overlay {
   display: none;
   position: fixed;

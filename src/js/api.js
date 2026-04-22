@@ -6,17 +6,20 @@ export async function askAI(chatId) {
     content: msg.text,
   }));
 
-  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${GROQ_API_KEY}`,
+  const response = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-8b-instant",
+        messages,
+      }),
     },
-    body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
-      messages,
-    }),
-  });
+  );
 
   if (!response.ok) throw new Error(`Error API: ${response.status}`);
 

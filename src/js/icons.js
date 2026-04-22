@@ -20,7 +20,7 @@ import {
   FileBox,
   GraduationCap,
   Globe,
-  Share2
+  Share2,
 } from "lucide";
 
 createIcons({
@@ -45,7 +45,7 @@ createIcons({
     FileBox,
     GraduationCap,
     Globe,
-    Share2
+    Share2,
   },
   attrs: {
     width: 15,

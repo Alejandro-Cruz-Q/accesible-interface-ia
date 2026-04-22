@@ -5,24 +5,24 @@ import { createNewChat } from "./sidebar.js";
 import { announceMessage } from "./messages.js";
 
 const MENU_CONFIG = [
-  { btnId: "tools-btn",          menuId: "tools-menu"          },
-  { btnId: "options-btn",        menuId: "options-menu"        },
+  { btnId: "tools-btn", menuId: "tools-menu" },
+  { btnId: "options-btn", menuId: "options-menu" },
   { btnId: "header-options-btn", menuId: "header-options-menu" },
-  { btnId: "profile-menu-btn",   menuId: "profile-menu"        },
+  { btnId: "profile-menu-btn", menuId: "profile-menu" },
 ];
 
 function closeAllMenus(exceptMenuId = null) {
   MENU_CONFIG.forEach(({ btnId, menuId }) => {
     if (menuId === exceptMenuId) return;
     const menu = document.getElementById(menuId);
-    const btn  = document.getElementById(btnId);
+    const btn = document.getElementById(btnId);
     if (menu) menu.setAttribute("hidden", "");
-    if (btn)  btn.setAttribute("aria-expanded", "false");
+    if (btn) btn.setAttribute("aria-expanded", "false");
   });
 }
 
 function setupDropdownMenu(btnId, menuId) {
-  const btn  = document.getElementById(btnId);
+  const btn = document.getElementById(btnId);
   const menu = document.getElementById(menuId);
   if (!btn || !menu) return;
 
@@ -36,12 +36,14 @@ function setupDropdownMenu(btnId, menuId) {
     }
   });
 
-  menu.querySelectorAll(".tools-menu-item, .profile-menu-item").forEach((item) => {
-    item.addEventListener("click", () => {
-      menu.setAttribute("hidden", "");
-      btn.setAttribute("aria-expanded", "false");
+  menu
+    .querySelectorAll(".tools-menu-item, .profile-menu-item")
+    .forEach((item) => {
+      item.addEventListener("click", () => {
+        menu.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+      });
     });
-  });
 
   menu.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -56,12 +58,18 @@ function setupDropdownMenu(btnId, menuId) {
       menu.querySelectorAll(".tools-menu-item, .profile-menu-item"),
     );
     const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
+    const last = focusable[focusable.length - 1];
 
     if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
     } else {
-      if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 }
@@ -69,15 +77,16 @@ function setupDropdownMenu(btnId, menuId) {
 MENU_CONFIG.forEach(({ btnId, menuId }) => setupDropdownMenu(btnId, menuId));
 document.addEventListener("click", () => closeAllMenus());
 
-
-
 document.getElementById("chat-input").addEventListener("keypress", (e) => {
   if (e.key === "Enter") document.getElementById("send-btn").click();
 });
 
 document.getElementById("send-btn").addEventListener("click", async () => {
   const input = document.getElementById("chat-input");
-  if (!input.value.trim()) { input.focus(); return; }
+  if (!input.value.trim()) {
+    input.focus();
+    return;
+  }
   input.focus();
 
   if (!getCurrentChatId()) createNewChat();
@@ -85,19 +94,24 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   document.querySelector(".welcome-message")?.remove();
 
   const userText = input.value.trim();
-  chatsDatabase[getCurrentChatId()].messages.push({ type: "user", text: userText });
+  chatsDatabase[getCurrentChatId()].messages.push({
+    type: "user",
+    text: userText,
+  });
 
   const chatArea = document.getElementById("chat-area");
-  const userEl   = createMessageEl("user", userText);
+  const userEl = createMessageEl("user", userText);
   chatArea.appendChild(userEl);
-  lucide.createIcons({ nodes: Array.from(userEl.querySelectorAll("[data-lucide]")) });
+  lucide.createIcons({
+    nodes: Array.from(userEl.querySelectorAll("[data-lucide]")),
+  });
   announceMessage("user");
 
   input.value = "";
   chatArea.scrollTop = chatArea.scrollHeight;
 
-  const typing       = document.createElement("div");
-  typing.className   = "bot-msg typing-indicator";
+  const typing = document.createElement("div");
+  typing.className = "bot-msg typing-indicator";
   typing.textContent = "...";
   chatArea.appendChild(typing);
   chatArea.scrollTop = chatArea.scrollHeight;
@@ -106,19 +120,25 @@ document.getElementById("send-btn").addEventListener("click", async () => {
     const botText = await askAI(getCurrentChatId());
     typing.remove();
 
-    chatsDatabase[getCurrentChatId()].messages.push({ type: "bot", text: botText });
+    chatsDatabase[getCurrentChatId()].messages.push({
+      type: "bot",
+      text: botText,
+    });
 
     const botEl = createMessageEl("bot", botText);
     chatArea.appendChild(botEl);
-    lucide.createIcons({ nodes: Array.from(botEl.querySelectorAll("[data-lucide]")) });
+    lucide.createIcons({
+      nodes: Array.from(botEl.querySelectorAll("[data-lucide]")),
+    });
     announceMessage("bot");
   } catch (error) {
     typing.remove();
-    const errMsg     = document.createElement("div");
+    const errMsg = document.createElement("div");
     errMsg.className = "bot-msg";
 
     if (error.message.includes("429")) {
-      errMsg.textContent = "Demasiadas peticiones. Espera unos segundos e inténtalo de nuevo.";
+      errMsg.textContent =
+        "Demasiadas peticiones. Espera unos segundos e inténtalo de nuevo.";
     } else if (error.message.includes("401") || error.message.includes("403")) {
       errMsg.textContent = "API key inválida o sin permisos.";
     } else {
@@ -132,25 +152,29 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   chatArea.scrollTop = chatArea.scrollHeight;
 });
 
-document.querySelectorAll("#new-chat-btn, #new-conversation-btn").forEach((btn) => {
-  btn.addEventListener("click", (e) => { e.preventDefault(); createNewChat(); });
-});
-
-
+document
+  .querySelectorAll("#new-chat-btn, #new-conversation-btn")
+  .forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      createNewChat();
+    });
+  });
 
 const chatInput = document.getElementById("chat-input");
-const voiceBtn  = document.getElementById("voice-btn");
+const voiceBtn = document.getElementById("voice-btn");
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
-let recognition     = null;
-let isListening     = false;
+let recognition = null;
+let isListening = false;
 let finalTranscript = "";
 
 if (SpeechRecognition) {
-  recognition                = new SpeechRecognition();
-  recognition.lang           = "es-ES";
-  recognition.continuous     = true;
+  recognition = new SpeechRecognition();
+  recognition.lang = "es-ES";
+  recognition.continuous = true;
   recognition.interimResults = true;
 
   voiceBtn.addEventListener("click", () => {
@@ -179,7 +203,9 @@ if (SpeechRecognition) {
     voiceBtn.classList.remove("is-listening");
     voiceBtn.setAttribute("aria-pressed", "false");
     if (finalTranscript.trim()) {
-      chatInput.value = [chatInput.value.trim(), finalTranscript.trim()].filter(Boolean).join(" ");
+      chatInput.value = [chatInput.value.trim(), finalTranscript.trim()]
+        .filter(Boolean)
+        .join(" ");
       chatInput.dispatchEvent(new Event("input", { bubbles: true }));
       chatInput.focus();
     }
@@ -195,5 +221,80 @@ if (SpeechRecognition) {
   };
 }
 
-function startVoiceRecognition() { finalTranscript = ""; recognition.start(); }
-function stopVoiceRecognition()  { recognition.stop(); }
+function startVoiceRecognition() {
+  finalTranscript = "";
+  recognition.start();
+}
+function stopVoiceRecognition() {
+  recognition.stop();
+}
+
+(function () {
+  "use strict";
+
+  const activeOptions = new Map(); // key → { label, chipEl }
+
+  const optionsBtn = document.getElementById("options-btn");
+  const optionsMenu = document.getElementById("options-menu");
+  const chipsWrapper = document.getElementById("active-options-container");
+
+  if (!optionsBtn || !optionsMenu || !chipsWrapper) {
+    console.warn("[active-options] Faltan elementos DOM requeridos.");
+    return;
+  }
+
+  function removeChip(key) {
+    const entry = activeOptions.get(key);
+    if (!entry) return;
+
+    entry.chipEl.remove();
+    entry.itemEl.classList.remove("is-active");
+    activeOptions.delete(key);
+  }
+
+  function createChip(key, label) {
+    const chip = document.createElement("button");
+    chip.className = "active-option-chip";
+    chip.setAttribute("aria-label", `Desactivar opción: ${label}`);
+    chip.setAttribute("type", "button");
+    chip.innerHTML =
+      `<span class="chip-label">${label}</span>` +
+      `<span class="chip-close" aria-hidden="true">✕</span>`;
+
+    chip.addEventListener("click", () => removeChip(key));
+    chip.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        removeChip(key);
+      }
+    });
+
+    return chip;
+  }
+
+  function activateOption(key, label, itemEl) {
+    if (activeOptions.has(key)) {
+      removeChip(key);
+      return;
+    }
+    const chip = createChip(key, label);
+    chipsWrapper.appendChild(chip);
+    activeOptions.set(key, { label, chipEl: chip, itemEl });
+    itemEl.classList.add("is-active");
+  }
+
+  optionsMenu.querySelectorAll(".tools-menu-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      if (item.hasAttribute("data-no-chip")) return;
+      const key =
+        item.dataset.optionKey ||
+        item.querySelector(".tools-menu-text")?.textContent.trim() ||
+        item.textContent.trim();
+      const label =
+        item.querySelector(".tools-menu-text")?.textContent.trim() ||
+        item.textContent.trim();
+
+      activateOption(key, label, item);
+    });
+  });
+})();

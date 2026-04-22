@@ -1,8 +1,19 @@
-/* BASE: Reset, variables, tipografía global */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 :root {
@@ -17,10 +28,17 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Montserrat", sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 main {
@@ -53,5 +71,5 @@ body.sidebar-collapsed main {
 .skip-link:focus {
   top: 1rem;
   outline: 3px solid var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);  
-} 
+  box-shadow: 0 0 0 1px var(--accent);
+}

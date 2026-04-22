@@ -2,10 +2,8 @@ import { chatsDatabase, incrementNextChatId } from "./db.js";
 import { renderChat } from "./messages.js";
 
 const sidebar = document.getElementById("sidebar");
-const btn     = document.getElementById("collapse-btn");
-const body    = document.body;
-
-// ── DETECCIÓN DE ZOOM ──────────────────────────────────────────
+const btn = document.getElementById("collapse-btn");
+const body = document.body;
 
 const BASE_DPR = window.devicePixelRatio;
 
@@ -18,36 +16,35 @@ function isNarrowOrZoomed() {
 }
 
 function applyZoomMode() {
-  body.classList.toggle('zoom-overlay-mode', isNarrowOrZoomed());
+  body.classList.toggle("zoom-overlay-mode", isNarrowOrZoomed());
 }
 
 applyZoomMode();
-window.addEventListener('resize', applyZoomMode);
-// También responde a cambios de zoom (visualViewport)
-window.visualViewport?.addEventListener('resize', applyZoomMode);
+window.addEventListener("resize", applyZoomMode);
+window.visualViewport?.addEventListener("resize", applyZoomMode);
 
-document.getElementById('sidebar-overlay')?.addEventListener('click', () => {
-  sidebar.classList.add('collapsed');
-  btn.setAttribute('aria-expanded', 'false');
-  btn.querySelector('span').textContent = '→';
-  body.classList.add('sidebar-collapsed');
-  document.getElementById('sidebar-overlay').style.display = 'none'; // ← añadir
-}); 
+document.getElementById("sidebar-overlay")?.addEventListener("click", () => {
+  sidebar.classList.add("collapsed");
+  btn.setAttribute("aria-expanded", "false");
+  btn.querySelector("span").textContent = "→";
+  body.classList.add("sidebar-collapsed");
+  document.getElementById("sidebar-overlay").style.display = "none";
+});
 
 export function createNewChat() {
-  const id    = incrementNextChatId();
+  const id = incrementNextChatId();
   const title = `Nueva conversación ${id}`;
 
   chatsDatabase[id] = { id, title, messages: [] };
 
   const ul = document.querySelector("#recent-chats");
   const li = document.createElement("li");
-  const a  = document.createElement("a");
+  const a = document.createElement("a");
 
-  a.href           = "#";
-  a.className      = "chat-link";
+  a.href = "#";
+  a.className = "chat-link";
   a.dataset.chatId = id;
-  a.textContent    = title;
+  a.textContent = title;
 
   a.addEventListener("click", (e) => {
     e.preventDefault();
@@ -59,7 +56,6 @@ export function createNewChat() {
   renderChat(id);
 }
 
-// Links de chat ya existentes en el HTML
 document.querySelectorAll(".chat-link").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -68,29 +64,25 @@ document.querySelectorAll(".chat-link").forEach((link) => {
   });
 });
 
-// Imagen de perfil
 const profileImg = document.getElementById("profile-img");
 if (profileImg && typeof profilePic !== "undefined") {
   profileImg.src = profilePic;
 }
 
-// Botón colapsar sidebar (escritorio)
 btn.addEventListener("click", () => {
   const isCollapsed = sidebar.classList.toggle("collapsed");
   btn.setAttribute("aria-expanded", !isCollapsed);
   btn.querySelector("span").textContent = isCollapsed ? "→" : "←";
   body.classList.toggle("sidebar-collapsed", isCollapsed);
 
-  // ── NUEVO: gestionar overlay ──
   const overlay = document.getElementById("sidebar-overlay");
   if (isCollapsed) {
-    overlay.style.display = "none";      // ocultar al colapsar
+    overlay.style.display = "none";
   } else if (isNarrowOrZoomed()) {
-    overlay.style.display = "block";     // mostrar solo si hay zoom alto
+    overlay.style.display = "block";
   }
 });
 
-// Toggle móvil
 document.getElementById("toggle")?.addEventListener("click", () => {
   sidebar.classList.toggle("open");
 });

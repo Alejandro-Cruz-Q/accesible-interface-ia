@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="/src/css/sidebar.css" />
     <link rel="stylesheet" href="/src/css/messages.css" />
     <link rel="stylesheet" href="/src/css/input.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <a href="#chat-input" class="skip-link">Saltar al contenido principal</a>
@@ -227,20 +233,37 @@
                   Opciones
                 </button>
                 <div id="options-menu" class="tools-menu" role="menu" hidden>
-                  <button class="tools-menu-item" role="menuitem">
+                  <button
+                    class="tools-menu-item"
+                    role="menuitem"
+                    data-option-key="modelo"
+                    data-no-chip
+                  >
                     <i data-lucide="FileBox"></i>
                     <span class="tools-menu-text">Modelo</span>
                   </button>
-                  <button class="tools-menu-item" role="menuitem">
+                  <button
+                    class="tools-menu-item"
+                    role="menuitem"
+                    data-option-key="investigacion"
+                  >
                     <i data-lucide="graduation-cap"></i>
                     <span class="tools-menu-text">Investigación</span>
                   </button>
-                  <button class="tools-menu-item" role="menuitem">
+                  <button
+                    class="tools-menu-item"
+                    role="menuitem"
+                    data-option-key="busqueda"
+                  >
                     <i data-lucide="globe"></i>
                     <span class="tools-menu-text">Búsqueda</span>
                   </button>
                 </div>
               </div>
+              <div
+                id="active-options-container"
+                class="active-options-container"
+              ></div>
             </div>
           </div>
           <div class="send-container">
