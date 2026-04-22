@@ -27,6 +27,8 @@
   min-height: 0;
   overflow: visible;
   transition: opacity 0.1s ease;
+  overflow-y: auto;      /* ✅ scroll unificado */
+  overflow-x: hidden;
 }
 
 .sidebar-chats {
