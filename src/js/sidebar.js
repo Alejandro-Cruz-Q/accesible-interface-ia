@@ -84,3 +84,83 @@ btn.addEventListener("click", () => {
   // Actualizar overlay basado en el nuevo estado
   applyZoomMode();
 });
+
+// ===== Tooltips para sidebar colapsado =====
+let tooltipElement = null;
+
+function createFixedTooltip(text, x, y) {
+  if (tooltipElement) {
+    tooltipElement.remove();
+  }
+
+  tooltipElement = document.createElement("div");
+  tooltipElement.textContent = text;
+  tooltipElement.style.cssText = `
+    position: fixed;
+    left: ${x}px;
+    top: ${y}px;
+    background: #111;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translateY(-50%);
+  `;
+
+  document.body.appendChild(tooltipElement);
+}
+
+function removeFixedTooltip() {
+  if (tooltipElement) {
+    tooltipElement.remove();
+    tooltipElement = null;
+  }
+}
+
+// Agregar listeners a los botones del sidebar cuando está colapsado
+const sidebarFuncsLinks = document.querySelectorAll(".sidebar-funcs a");
+
+sidebarFuncsLinks.forEach((link) => {
+  link.addEventListener("mouseenter", () => {
+    if (sidebar.classList.contains("collapsed")) {
+      const rect = link.getBoundingClientRect();
+      const ariaLabel = link.getAttribute("aria-label");
+
+      if (ariaLabel) {
+        createFixedTooltip(
+          ariaLabel,
+          rect.right + 12,
+          rect.top + rect.height / 2,
+        );
+      }
+    }
+  });
+
+  link.addEventListener("mouseleave", () => {
+    removeFixedTooltip();
+  });
+
+  link.addEventListener("focus", () => {
+    if (sidebar.classList.contains("collapsed")) {
+      const rect = link.getBoundingClientRect();
+      const ariaLabel = link.getAttribute("aria-label");
+
+      if (ariaLabel) {
+        createFixedTooltip(
+          ariaLabel,
+          rect.right + 12,
+          rect.top + rect.height / 2,
+        );
+      }
+    }
+  });
+
+  link.addEventListener("blur", () => {
+    removeFixedTooltip();
+  });
+});

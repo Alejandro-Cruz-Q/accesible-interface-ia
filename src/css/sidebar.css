@@ -27,8 +27,13 @@
   min-height: 0;
   overflow: visible;
   transition: opacity 0.1s ease;
-  overflow-y: auto;      /* ✅ scroll unificado */
+  overflow-y: auto; /* ✅ scroll unificado */
   overflow-x: hidden;
+}
+
+#sidebar.collapsed #sidebar-content {
+  overflow-x: visible !important;
+  overflow-y: auto;
 }
 
 .sidebar-chats {
@@ -82,7 +87,8 @@
 .sidebar-funcs li:hover,
 .sidebar-chats li:hover {
   border-color: var(--text-primary);
-}
+  border-radius: 12px;
+} 
 
 .sidebar-funcs li.active,
 .sidebar-chats li.active {
@@ -111,11 +117,16 @@
   font-size: clamp(0.85rem, 0.6rem + 0.4vw, 1.1rem);
 }
 
-.sidebar-funcs a:focus-visible,
-.sidebar-chats a:focus-visible {
+.sidebar-funcs li:focus-within,
+.sidebar-chats li:focus-within {    
   border-radius: 12px;
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 2px;  
+}
+
+.sidebar-chats a:focus-visible,
+.sidebar-funcs a:focus-visible {
+  border-radius: 12px;
 }
 
 .sidebar-funcs .func-icon {
@@ -146,6 +157,10 @@
   pointer-events: auto;
 }
 
+#sidebar.collapsed .sidebar-funcs ul {
+  overflow: visible;
+}
+
 #sidebar.collapsed .sidebar-funcs h2 {
   opacity: 0;
   pointer-events: none;
@@ -168,12 +183,16 @@
   position: relative;
 }
 
+#sidebar.collapsed .sidebar-funcs li {
+  overflow: visible;
+}
+
 #sidebar.collapsed .sidebar-funcs a::after {
-  content: attr(aria-label);
+  content: "";
   position: absolute;
-  left: calc(100% + 12px);
+  left: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(12px);
   background: #111;
   color: #fff;
   font-size: 0.78rem;
@@ -187,7 +206,8 @@
   transition:
     opacity 0.18s ease,
     transform 0.18s ease;
-  z-index: 900;
+  z-index: 1001;
+  display: none;
 }
 
 #sidebar.collapsed .sidebar-funcs a:hover::after,
@@ -425,6 +445,11 @@ body.zoom-overlay-mode #sidebar-overlay {
   display: block;
 }
 
+body.sidebar-collapsed #sidebar-overlay {
+  display: none !important;
+  pointer-events: none;
+}
+
 #sidebar-overlay {
   display: none;
   position: fixed;
@@ -432,4 +457,5 @@ body.zoom-overlay-mode #sidebar-overlay {
   background: rgba(0, 0, 0, 0.25);
   z-index: 200;
   cursor: pointer;
+  pointer-events: auto;
 }
