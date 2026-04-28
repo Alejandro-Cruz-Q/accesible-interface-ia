@@ -16,7 +16,18 @@ function isNarrowOrZoomed() {
 }
 
 function applyZoomMode() {
-  body.classList.toggle("zoom-overlay-mode", isNarrowOrZoomed());
+  const isZoomed = isNarrowOrZoomed();
+  const overlay = document.getElementById("sidebar-overlay");
+  const sidebarCollapsed = sidebar.classList.contains("collapsed");
+
+  body.classList.toggle("zoom-overlay-mode", isZoomed);
+
+  // Mostrar overlay SOLO cuando zoom es activado Y sidebar NO está colapsado
+  if (isZoomed && !sidebarCollapsed) {
+    overlay.style.display = "block";
+  } else {
+    overlay.style.display = "none";
+  }
 }
 
 applyZoomMode();
@@ -28,7 +39,7 @@ document.getElementById("sidebar-overlay")?.addEventListener("click", () => {
   btn.setAttribute("aria-expanded", "false");
   btn.querySelector("span").textContent = "→";
   body.classList.add("sidebar-collapsed");
-  document.getElementById("sidebar-overlay").style.display = "none";
+  applyZoomMode();
 });
 
 document.querySelectorAll(".chat-link").forEach((link) => {
@@ -70,10 +81,6 @@ btn.addEventListener("click", () => {
   btn.querySelector("span").textContent = isCollapsed ? "→" : "←";
   body.classList.toggle("sidebar-collapsed", isCollapsed);
 
-  const overlay = document.getElementById("sidebar-overlay");
-  if (isCollapsed) {
-    overlay.style.display = "none";
-  } else if (isNarrowOrZoomed()) {
-    overlay.style.display = "block";
-  }
+  // Actualizar overlay basado en el nuevo estado
+  applyZoomMode();
 });
