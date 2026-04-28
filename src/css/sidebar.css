@@ -200,7 +200,7 @@
   top: 1rem;
   right: 0.7rem;
   background: var(--bg-primary);
-  border: 1px solid var(--text-primary);
+  border: 1px solid var(--bg-terciary);
   border-radius: 50%;
   width: 2.75rem;
   height: 2.75rem;
@@ -214,7 +214,7 @@
 
 .collapse-btn:hover,
 .collapse-btn:focus {
-  background: black;
+  background: var(--bg-terciary);
   color: var(--bg-primary);
   font-size: 1.5rem;
   transition: all 0.3s ease;
