@@ -32,6 +32,8 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
+  height: 100%;
+  overflow: hidden;
 }
 
 input,
@@ -192,4 +194,20 @@ body.sidebar-collapsed main {
 .has-tooltip.tooltip-bottom:hover::after,
 .has-tooltip.tooltip-bottom:focus-visible::after {
   transform: translateX(-50%) scale(1);
+}
+
+body.zoom-overlay-mode {
+  --chat-width: 700px;
+}
+
+body.zoom-overlay-mode #chat-area {
+  padding: 0.8rem 1rem;
+}
+
+body.zoom-overlay-mode #input-area {
+  padding: 0.5rem 1rem;
+}
+
+body.zoom-overlay-mode .privacy-notice {
+  display: none;
 }
