@@ -211,3 +211,50 @@ body.zoom-overlay-mode #input-area {
 body.zoom-overlay-mode .privacy-notice {
   display: none;
 }
+
+/* ========== MODO ZOOM ADAPTATIVO ========== */
+/* Reducir paddings cuando zoom > 150% para priorizar contenido */
+
+html.zoomed-mode #chat-area {
+  padding: clamp(0.25rem, 0.5rem - 0.375vw, 0.75rem);
+}
+
+html.zoomed-mode #input-area {
+  padding: clamp(0.25rem, 0.5rem - 0.25vw, 0.5rem)
+    clamp(0.5rem, 0.75rem - 0.375vw, 1rem) clamp(0.5rem, 0.75rem - 0.375vw, 1rem);
+}
+
+html.zoomed-mode .msg-wrapper {
+  margin: clamp(0.15rem, 0.35rem - 0.25vw, 0.35rem) 0;
+}
+
+html.zoomed-mode .user-msg,
+html.zoomed-mode .bot-msg {
+  margin: clamp(0.15rem, 0.35rem - 0.25vw, 0.35rem) 0;
+}
+
+html.zoomed-mode .input-container {
+  gap: 0.4em;
+  padding: 0.5em;
+}
+
+html.zoomed-mode .input-left {
+  gap: 0.3em;
+}
+
+html.zoomed-mode .tools-container {
+  gap: 0.25em;
+}
+
+html.zoomed-mode .privacy-notice {
+  display: none;
+}
+
+html.zoomed-mode .user-msg,
+html.zoomed-mode .bot-msg {
+  max-width: 90%;
+}
+
+html.zoomed-mode .msg-wrapper {
+  max-width: 90%;
+}

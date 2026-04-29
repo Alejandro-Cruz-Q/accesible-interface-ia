@@ -1,4 +1,5 @@
 import { chatsDatabase, setCurrentChatId } from "./db.js";
+import { createIcons, icons } from "lucide";
 
 let activeReadBtn = null;
 
@@ -91,10 +92,10 @@ export function createMessageEl(type, text) {
       btn.addEventListener("click", () => {
         navigator.clipboard.writeText(bubble.textContent);
         icono.setAttribute("data-lucide", "check");
-        lucide.createIcons({ nodes: [icono] });
+        createIcons({ icons, nodes: [icono] });
         setTimeout(() => {
           icono.setAttribute("data-lucide", "copy");
-          lucide.createIcons({ nodes: [icono] });
+          createIcons({ icons, nodes: [icono] });
         }, 1500);
       });
     }
@@ -104,7 +105,7 @@ export function createMessageEl(type, text) {
         if (window.speechSynthesis.speaking) {
           window.speechSynthesis.cancel();
           icono.setAttribute("data-lucide", "mic-vocal");
-          lucide.createIcons({ nodes: [icono] });
+          createIcons({ icons, nodes: [icono] });
           setActiveReadBtn(null);
           return;
         }
@@ -112,7 +113,7 @@ export function createMessageEl(type, text) {
         const currentActiveReadBtn = getActiveReadBtn();
         if (currentActiveReadBtn && currentActiveReadBtn !== icono) {
           currentActiveReadBtn.setAttribute("data-lucide", "mic-vocal");
-          lucide.createIcons({ nodes: [currentActiveReadBtn] });
+          createIcons({ icons, nodes: [currentActiveReadBtn] });
         }
         setActiveReadBtn(icono);
 
@@ -122,17 +123,17 @@ export function createMessageEl(type, text) {
         utterance.pitch = 1;
 
         icono.setAttribute("data-lucide", "volume-2");
-        lucide.createIcons({ nodes: [icono] });
+        createIcons({ icons, nodes: [icono] });
 
         utterance.onend = () => {
           icono.setAttribute("data-lucide", "mic-vocal");
-          lucide.createIcons({ nodes: [icono] });
+          createIcons({ icons, nodes: [icono] });
           setActiveReadBtn(null);
         };
 
         utterance.onerror = () => {
           icono.setAttribute("data-lucide", "mic-vocal");
-          lucide.createIcons({ nodes: [icono] });
+          createIcons({ icons, nodes: [icono] });
           setActiveReadBtn(null);
         };
 
@@ -182,7 +183,8 @@ export function renderChat(chatId) {
   chat.messages.forEach((msg) => {
     const msgEl = createMessageEl(msg.type, msg.text);
     chatArea.appendChild(msgEl);
-    lucide.createIcons({
+    createIcons({
+      icons,
       nodes: Array.from(msgEl.querySelectorAll("[data-lucide]")),
     });
   });

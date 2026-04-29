@@ -5,10 +5,8 @@ const sidebar = document.getElementById("sidebar");
 const btn = document.getElementById("collapse-btn");
 const body = document.body;
 
-const BASE_DPR = window.devicePixelRatio;
-
 function isHighZoom() {
-  return window.devicePixelRatio >= BASE_DPR * 2;
+  return window.devicePixelRatio >= 2;
 }
 
 function isNarrowOrZoomed() {
