@@ -149,7 +149,6 @@ export function createMessageEl(type, text) {
   });
 
   wrapper.addEventListener("focusout", (e) => {
-    // Solo oculta si el foco sale completamente del wrapper
     if (!wrapper.contains(e.relatedTarget)) {
       actions.setAttribute("aria-hidden", "true");
     }

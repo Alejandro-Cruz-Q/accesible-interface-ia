@@ -290,17 +290,15 @@ if (optionsBtn && optionsMenu && chipsWrapper) {
 function detectZoomLevel() {
   const zoomLevel = Math.round(window.devicePixelRatio * 100);
   const threshold = 200;
-  
+
   if (zoomLevel >= threshold) {
-    document.documentElement.classList.add('zoomed-mode');
+    document.documentElement.classList.add("zoomed-mode");
   } else {
-    document.documentElement.classList.remove('zoomed-mode');
+    document.documentElement.classList.remove("zoomed-mode");
   }
 }
 
-// Detectar al cargar
-window.addEventListener('load', detectZoomLevel);
+window.addEventListener("load", detectZoomLevel);
 
-// Detectar cuando el usuario cambia el zoom (Ctrl++, Ctrl+-, o pinch en móvil)
-window.addEventListener('resize', detectZoomLevel);
-window.visualViewport?.addEventListener('resize', detectZoomLevel);
+window.addEventListener("resize", detectZoomLevel);
+window.visualViewport?.addEventListener("resize", detectZoomLevel);

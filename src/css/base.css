@@ -137,12 +137,12 @@ body.sidebar-collapsed main {
 }
 
 .has-tooltip {
-  position: relative; /* imprescindible */
+  position: relative;
 }
 
 .has-tooltip::after {
   content: attr(aria-label);
-  position: absolute; /* imprescindible */
+  position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) scale(0.95);
@@ -211,9 +211,6 @@ body.zoom-overlay-mode #input-area {
 body.zoom-overlay-mode .privacy-notice {
   display: none;
 }
-
-/* ========== MODO ZOOM ADAPTATIVO ========== */
-/* Reducir paddings cuando zoom > 150% para priorizar contenido */
 
 html.zoomed-mode #chat-area {
   padding: clamp(0.25rem, 0.5rem - 0.375vw, 0.75rem);

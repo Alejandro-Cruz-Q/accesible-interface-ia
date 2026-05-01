@@ -16,12 +16,6 @@
   background-color: var(--bg-primary);
 }
 
-/* #sidebar.collapsed {
-  width: 75px;
-  padding: 4rem 0.5rem 1rem;
-  overflow: visible;
-} */
-
 #sidebar.collapsed {
   width: 4.6875rem;
   padding: clamp(2rem, 5.2rem - 1vw, 6rem) 0.4em

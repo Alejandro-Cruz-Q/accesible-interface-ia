@@ -20,7 +20,6 @@ function applyZoomMode() {
 
   body.classList.toggle("zoom-overlay-mode", isZoomed);
 
-  // Mostrar overlay SOLO cuando zoom es activado Y sidebar NO está colapsado
   if (isZoomed && !sidebarCollapsed) {
     overlay.style.display = "block";
   } else {
@@ -91,11 +90,9 @@ btn.addEventListener("click", () => {
   body.classList.toggle("sidebar-collapsed", isCollapsed);
   updateCollapseBtnTooltip();
 
-  // Actualizar overlay basado en el nuevo estado
   applyZoomMode();
 });
 
-// ===== Tooltips para sidebar colapsado =====
 let tooltipElement = null;
 
 function createFixedTooltip(text, x, y) {
@@ -132,7 +129,6 @@ function removeFixedTooltip() {
   }
 }
 
-// Agregar listeners a los botones del sidebar cuando está colapsado
 const sidebarFuncsLinks = document.querySelectorAll(".sidebar-funcs a");
 
 sidebarFuncsLinks.forEach((link) => {
