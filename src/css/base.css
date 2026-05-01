@@ -159,7 +159,7 @@ body.sidebar-collapsed main {
   transition:
     opacity 0.16s ease,
     transform 0.16s ease;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .has-tooltip:hover::after,
@@ -221,7 +221,8 @@ html.zoomed-mode #chat-area {
 
 html.zoomed-mode #input-area {
   padding: clamp(0.25rem, 0.5rem - 0.25vw, 0.5rem)
-    clamp(0.5rem, 0.75rem - 0.375vw, 1rem) clamp(0.5rem, 0.75rem - 0.375vw, 1rem);
+    clamp(0.5rem, 0.75rem - 0.375vw, 1rem)
+    clamp(0.5rem, 0.75rem - 0.375vw, 1rem);
 }
 
 html.zoomed-mode .msg-wrapper {

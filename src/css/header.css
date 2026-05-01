@@ -32,7 +32,7 @@
   border: 1px solid transparent;
   border-color: transparent;
   font-size: clamp(0.55rem, 1.105rem - 0.2125vw, 1rem);
-  padding: 0.647em 0.882em; 
+  padding: 0.8em 0.9em; 
 }
 
 .header-left button:hover {
@@ -56,5 +56,5 @@
 }
 
 #header-options-btn {
-  padding: 0.765em 1.118em;
+  padding: 0.9em 1.4em;
 }

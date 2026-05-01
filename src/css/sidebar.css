@@ -7,12 +7,11 @@
   display: flex;
   flex-direction: column;
   /* padding: 4rem 1.5rem 1rem; */
-  padding: clamp(2rem, 5.2rem - 1vw, 6rem)
-           1.25em
-           clamp(0.5rem, 1.3rem - 0.25vw, 1.5rem);
-  overflow: hidden;
+  padding: clamp(2rem, 5.2rem - 1vw, 6rem) 1.25em
+    clamp(0.5rem, 1.3rem - 0.25vw, 1.5rem);
+  overflow: visible;
   box-shadow: 6px 0 20px rgba(0, 0, 0, 0.08);
-  z-index: 100;
+  z-index: 300;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--bg-primary);
 }
@@ -24,10 +23,9 @@
 } */
 
 #sidebar.collapsed {
-  width: 4.6875rem;                           
-  padding: clamp(2rem, 5.2rem - 1vw, 6rem)    
-           0.4em                               
-           clamp(0.5rem, 1.3rem - 0.25vw, 1.5rem);
+  width: 4.6875rem;
+  padding: clamp(2rem, 5.2rem - 1vw, 6rem) 0.4em
+    clamp(0.5rem, 1.3rem - 0.25vw, 1.5rem);
 }
 
 #sidebar-content {
@@ -90,7 +88,7 @@
   border: 2px solid transparent;
   margin-bottom: 0.1em;
   border-radius: 0.75em;
-} 
+}
 
 .sidebar-funcs li.active,
 .sidebar-chats li.active {
@@ -126,14 +124,14 @@
 }
 
 .sidebar-funcs li:focus-within,
-.sidebar-chats li:focus-within {    
+.sidebar-chats li:focus-within {
   border-color: var(--text-primary);
   border-radius: 0.75em;
-  outline-offset: 2px;  
+  outline-offset: 2px;
 }
 
 .sidebar-chats a:focus-visible,
-.sidebar-funcs a:focus-visible {  
+.sidebar-funcs a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -209,7 +207,7 @@
   transform: translateY(-50%) translateX(1em);
   background: #111;
   color: #fff;
-  font-size: clamp(0.7rem, 1.014rem - 0.195vw, 1.0rem);
+  font-size: clamp(0.7rem, 1.014rem - 0.195vw, 1rem);
   font-weight: 500;
   padding: 0.385em 0.833em;
   border-radius: 0.481em;
@@ -313,7 +311,7 @@
 }
 
 .profile-email {
-  font-size: clamp(0.7rem, 1.014rem - 0.195vw, 1.0rem);
+  font-size: clamp(0.7rem, 1.014rem - 0.195vw, 1rem);
   margin: 0.25rem 0 0;
   color: rgba(0, 0, 0, 0.6);
   white-space: nowrap;
@@ -450,7 +448,8 @@ body.zoom-overlay-mode main {
   transition: none;
 }
 
-body.zoom-overlay-mode #sidebar:not(.collapsed) {
+body.zoom-overlay-mode #sidebar:not(.collapsed),
+body.zoom-overlay-mode #sidebar.collapsed {
   z-index: 300;
   box-shadow: 8px 0 32px rgba(0, 0, 0, 0.22);
 }

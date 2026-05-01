@@ -37,6 +37,7 @@ document.getElementById("sidebar-overlay")?.addEventListener("click", () => {
   btn.setAttribute("aria-expanded", "false");
   btn.querySelector("span").textContent = "→";
   body.classList.add("sidebar-collapsed");
+  updateCollapseBtnTooltip();
   applyZoomMode();
 });
 
@@ -73,11 +74,22 @@ export function createNewChat() {
   renderChat(id);
 }
 
+function updateCollapseBtnTooltip() {
+  const isCollapsed = sidebar.classList.contains("collapsed");
+  btn.setAttribute(
+    "aria-label",
+    isCollapsed ? "Expandir barra lateral" : "Colapsar barra lateral",
+  );
+}
+
+updateCollapseBtnTooltip();
+
 btn.addEventListener("click", () => {
   const isCollapsed = sidebar.classList.toggle("collapsed");
   btn.setAttribute("aria-expanded", !isCollapsed);
   btn.querySelector("span").textContent = isCollapsed ? "→" : "←";
   body.classList.toggle("sidebar-collapsed", isCollapsed);
+  updateCollapseBtnTooltip();
 
   // Actualizar overlay basado en el nuevo estado
   applyZoomMode();

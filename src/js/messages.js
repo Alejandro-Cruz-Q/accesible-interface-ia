@@ -49,7 +49,7 @@ export function createMessageEl(type, text) {
   const actions = document.createElement("div");
   actions.className = "msg-actions";
   actions.setAttribute("role", "group");
-  actions.setAttribute("aria-hidden", "true");
+  // actions.setAttribute("aria-hidden", "true");
   actions.setAttribute(
     "aria-label",
     type === "user"

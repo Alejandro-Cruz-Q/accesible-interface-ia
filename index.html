@@ -22,8 +22,9 @@
     <nav id="sidebar" aria-label="Navegación chats" role="navigation">
       <button
         id="collapse-btn"
-        class="collapse-btn"
+        class="collapse-btn has-tooltip tooltip-right"
         aria-expanded="true"
+        aria-label="Colapsar barra lateral"
         aria-controls="sidebar-content"
       >
         <span>←</span>
@@ -31,7 +32,7 @@
       <div id="sidebar-content">
         <div class="sidebar-funcs">
           <h2>Funcionalidades</h2>
-          <ul role="list">
+          <ul role="list" aria-label="Funcionalidades">
             <li>
               <a
                 href="#Nueva conversación"
@@ -64,7 +65,7 @@
         </div>
         <div class="sidebar-chats">
           <h3>Chats Recientes</h3>
-          <ul id="recent-chats" role="list">
+          <ul id="recent-chats" role="list" aria-label="Chats recientes">
             <li>
               <a
                 href="#"
@@ -270,7 +271,6 @@
               id="send-btn"
               class="send-action-btn has-tooltip"
               aria-label="Enviar"
-              aria-describedby="send-tooltip"
             >
               <i data-lucide="send-horizontal"></i>
             </button>
@@ -279,7 +279,6 @@
                 id="voice-btn"
                 class="send-action-btn has-tooltip"
                 aria-label="Voz"
-                aria-describedby="voice-tooltip"
               >
                 <i data-lucide="mic"></i>
               </button>
